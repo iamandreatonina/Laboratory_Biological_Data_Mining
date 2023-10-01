@@ -1,4 +1,4 @@
-# Laboratory_Biological_Data_Mining
+# Laboratory of Biological Data Mining
 
 Project for the course of Laboratory Biological Data Mining held by Professor Enrico Blanzieri and Professor Toma Tebaldi (A.Y. 2023-2024).
 
