@@ -8,6 +8,8 @@ Genes evolved specifically in the human lineage after the split from the lineage
 ## Broad questions 
  * Are human-specific genes connected by causal relationships?
  * Is their expression altered in specific diseases (pediatric brain and blood cancers?)
+------
+Constraints: Use causal relationships among human genes obtained from the Fantom project
 
 
 * [github for project](https://github.com/annalisaxamin/LBDM)
