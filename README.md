@@ -15,3 +15,4 @@ Constraints: Use causal relationships among human genes obtained from the Fantom
 * [github for project](https://github.com/annalisaxamin/LBDM)
 * [2 project](https://github.com/VittoriaOssanna/BiologicalDM_project)
 * [3 project](https://github.com/Elisshaze/LBDM-project)
+* https://github.com/zhangyuqing/ComBat-seq
