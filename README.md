@@ -19,3 +19,7 @@ Constraints: Use causal relationships among human genes obtained from the Fantom
 * [2 project](https://github.com/VittoriaOssanna/BiologicalDM_project)
 * [3 project](https://github.com/Elisshaze/LBDM-project)
 * https://github.com/zhangyuqing/ComBat-seq
+
+## Model 
+* [GOEGCN_BRCA_Subtypes](https://github.com/yxchspring/GOEGCN_BRCA_Subtypes)
+* Python,[Scikit-learn library](https://scikit-learn.org/stable/)
