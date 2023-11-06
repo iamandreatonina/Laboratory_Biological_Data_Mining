@@ -3,62 +3,6 @@
 Project for the course of Laboratory Biological Data Mining held by Professor Enrico Blanzieri and Professor Toma Tebaldi (A.Y. 2023-2024).
 
 ## Authors
-<table>
-<tr>
-<th align="center">
-<img width="441" height="1">
-<p> 
-<small>
-EXAMPLE TEXT
-</small>
-</p>
-</th>
-<th align="center">
-<img width="441" height="1">
-<p> 
-<small>
-EXAMPLE TEXT
-</small>
-</p>
-</th>
-</tr>
-<tr>
-<td>
-<!-- REMOVE THE BACKSLASHES -->
-\```jsonc
-{
-  "foo": [
-    {
-      "bar": "hello world"
-    }
-  ]
-}
-\```
-  
-</td>
-<td>
-<!-- REMOVE THE BACKSLASHES -->
-\```jsonc
-{
-  "foo": [
-    {
-      "bar": "hello world"
-    }
-  ]
-}
-\```
-  
-</td>
-</tr>
-<tr>
-<td align="center">
-Column 1
-</td>
-<td align="center">
-Column 2
-</td>
-</tr>
-</table>
 
 Project developed by: 
   * Andrea Tonina  [@iamandreatonina](https://github.com/iamandreatonina)
