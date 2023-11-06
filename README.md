@@ -2,6 +2,17 @@
 
 Project for the course of Laboratory Biological Data Mining held by Professor Enrico Blanzieri and Professor Toma Tebaldi (A.Y. 2023-2024).
 
+## Authors
+Project developed by: 
+  * Andrea Tonina  [@iamandreatonina](https://github.com/iamandreatonina)
+  * Gloria Lugoboni [@GloriaLugoboni](https://github.com/GloriaLugoboni)
+  * Lorenzo Santarelli [@Lor-Santa](https://github.com/Lor-Santa)
+  * Thomas Sirchi [Thokas99](https://github.com/Thokas99)
+  * Sabri Kaci [sanka95](https://github.com/sabka95)
+
+
+![alt text](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/tree/main/Logo_group)
+
 ## Topic: Human-specific genes and human diseases
 Genes evolved specifically in the human lineage after the split from the lineage leading to the chimpanzee and bonobo (around 6-7 million years ago). They potentially explain huge body alterations between humans and chimpanzees, such as average height and brain size (3-fold difference) They are potentially relevant for “human-specific” diseases (Pediatric brain tumors? Pediatric leukemias?)
 
