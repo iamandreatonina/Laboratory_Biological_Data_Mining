@@ -59,6 +59,7 @@ Column 2
 </td>
 </tr>
 </table>
+
 Project developed by: 
   * Andrea Tonina  [@iamandreatonina](https://github.com/iamandreatonina)
   * Gloria Lugoboni [@GloriaLugoboni](https://github.com/GloriaLugoboni)
