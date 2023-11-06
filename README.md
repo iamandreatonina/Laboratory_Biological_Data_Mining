@@ -10,8 +10,7 @@ Project developed by:
   * Thomas Sirchi [Thokas99](https://github.com/Thokas99)
   * Sabri Kaci [sanka95](https://github.com/sabka95)
 
-
-![alt text](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/tree/main/Logo_group/photo_5929434998077767761_y.jpg?raw=true)
+<img src="r[elative/path/in/repository/to/image.svg](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/tree/main/Logo_group/photo_5929434998077767761_y.jpg)" width="128"/>
 
 ## Topic: Human-specific genes and human diseases
 Genes evolved specifically in the human lineage after the split from the lineage leading to the chimpanzee and bonobo (around 6-7 million years ago). They potentially explain huge body alterations between humans and chimpanzees, such as average height and brain size (3-fold difference) They are potentially relevant for “human-specific” diseases (Pediatric brain tumors? Pediatric leukemias?)
