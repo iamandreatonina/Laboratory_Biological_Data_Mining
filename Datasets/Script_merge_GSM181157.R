@@ -29,4 +29,4 @@ for (i in seq_along(file_names)) {
 View(final_data2)
 
 # Write the final data frame to a text file
-write.table(final_data2, file = "final_data.txt", sep = "\t", quote = FALSE, row.names = FALSE)
+write.csv(final_data2, file = "merged_GSM181157.csv", row.names = FALSE)
