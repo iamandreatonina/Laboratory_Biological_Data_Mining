@@ -15,13 +15,13 @@ final_data2 <- data.frame()
 # Loop through each file
 for (i in seq_along(file_names)) {
   # Read the file into a temporary data frame
-  temp_data <- read.table(file_names[i], col.names = c("ESSEMBLE_ID", file_names_cleaned[i]))
+  temp_data <- read.table(file_names[i], col.names = c("ENSEMBL_ID", file_names_cleaned[i]))
   
   # Merge the temporary data frame with the final data frame
   if (nrow(final_data2) == 0) {
     final_data2 <- temp_data
   } else {
-    final_data2 <- merge(final_data2, temp_data, by = "ESSEMBLE_ID", all = TRUE)
+    final_data2 <- merge(final_data2, temp_data, by = "ENSEMBL_ID", all = TRUE)
   }
 }
 
