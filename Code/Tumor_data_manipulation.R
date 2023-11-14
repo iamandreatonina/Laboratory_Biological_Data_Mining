@@ -1,5 +1,5 @@
 library(dplyr)
-library(EDASeq)
+# library(EDASeq)
 library(biomaRt)
 library(edgeR)
 library(readxl)
@@ -54,12 +54,56 @@ colnames(GSE227832)[1] <- 'ensembl_gene_id'
 GSE133499 <- readxl::read_xlsx('GSE133499_count_matrix_samples_sciarrillo.xlsx')
 
 # remove useless data 
-
 GSE133499 <- GSE133499 %>% dplyr::select(-c(40:43))
 
+# substitution of first column with ensembl_gene_id
+colnames(GSE133499)[1] <- 'ensembl_gene_id'
+
 # create the ensembl object that points to the Hsapiens database
+ensembl<- biomaRt::useEnsembl(biomart = "ensembl",dataset = "hsapiens_gene_ensembl")
 
-ensembl_GSE133499 <- biomaRt::useEnsembl(biomart = "ensembl",dataset = "hsapiens_gene_ensembl")
+# retrieve the corresponding ensembl_gene_id from the hugo symbol of our dataset
+convert_GSE133499 <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol"),
+                 filters="hgnc_symbol", 
+                 values=GSE133499$ensembl_gene_id,
+                 mart = ensembl_GSE133499)
 
+# we add this info to the initial file -> use merge
+GSE133499 <- merge(GSE133499,convert_GSE133499,by.x="ensembl_gene_id",by.y="hgnc_symbol")
+# we substitute the hugo symbol with the ensembl genes and eliminate the column with hugo symbol
+GSE133499[1]<- GSE133499[40]
+GSE133499 <- GSE133499 %>% dplyr::select(-ensembl_gene_id.y)
 
+####### Data manipulation T_all
 
+T_all <- read.csv('T-ALL-RawCount-Cohort7_8.txt',sep= '\t',header = T)
+
+# create the ensembl object that points to the Hsapiens database
+ensembl<- biomaRt::useEnsembl(biomart = "ensembl",dataset = "hsapiens_gene_ensembl")
+
+# retrieve the corresponding ensembl_gene_id from the hugo symbol of our dataset
+convert_T_all <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol"),
+                           filters="hgnc_symbol", 
+                           values=T_all$GeneSymbol,
+                           mart = ensembl)
+
+# we add this info to the initial file -> use merge
+T_all <- merge(T_all,convert_T_all,by.x="GeneSymbol",by.y="hgnc_symbol")
+T_all[1] <- T_all[110]
+T_all <- T_all %>% dplyr::select(-110)
+colnames(T_all)[1] <- 'ensembl_gene_id'
+
+###### Data manipulation GSE181157
+
+GSE181157 <- read.csv('GSE181157/f_merged_GSE181157.csv')
+colnames(GSE181157)[1]<- 'ensembl_gene_id'
+
+##### Create a final dataframe with all the data 
+
+merg1 <- merge(GSE133499,GSE181157,by = 'ensembl_gene_id',all.x = T,all.y = T)
+merg2 <- merge(GSE227832,T_all, by='ensembl_gene_id',all.x = T,all.y = T)
+Tumor_Dataframe <- merge(merg1,merg2,by= 'ensembl_gene_id',all.x = T,all.y = T)
+Tumor_Dataframe<- na.omit(Tumor_Dataframe)
+
+write.csv(Tumor_Dataframe,file = 'Tumor_dataframe.csv',row.names = F)
+ 
