@@ -63,10 +63,10 @@ colnames(GSE133499)[1] <- 'ensembl_gene_id'
 ensembl<- biomaRt::useEnsembl(biomart = "ensembl",dataset = "hsapiens_gene_ensembl")
 
 # retrieve the corresponding ensembl_gene_id from the hugo symbol of our dataset
-convert_GSE133499 <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol"),
+convert_GSE133499 <- getBM(attributes=c("ensembl_gene_id","hgnc_symbol",'tras'),
                  filters="hgnc_symbol", 
                  values=GSE133499$ensembl_gene_id,
-                 mart = ensembl_GSE133499)
+                 mart = ensembl)
 
 # we add this info to the initial file -> use merge
 GSE133499 <- merge(GSE133499,convert_GSE133499,by.x="ensembl_gene_id",by.y="hgnc_symbol")
