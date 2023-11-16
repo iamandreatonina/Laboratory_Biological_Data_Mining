@@ -140,11 +140,12 @@ dev.off()
 ##### PCA analysis 
 
 CPM_table_total <- as.data.frame(merge(CPM_control,CPM_tumor,by = 0))
-color<- c(rep('olivedrab',30),rep('indianred',640))
+color<- c(rep('darkgreen',29),rep('indianred',640))
 # we need to have both for the columns and the row a variance different from zero (because divide for the varaince )
-CPM_table_total_filtered<-CPM_table_total[ , which(apply(CPM_table_total, 2, sd) != 0)] 
-CPM_table_total_filtered<- CPM_table_total_filtered[which(apply(CPM_table_total_filtered, 1, sd) != 0),]
+CPM_table_total_filtered<-CPM_table_total[ , which(apply(CPM_table_total, 2, var) != 0)] 
+CPM_table_total_filtered<- CPM_table_total_filtered[which(apply(CPM_table_total_filtered, 1, var) != 0),]
 CPM_table_total_filtered_PCA<-CPM_table_total_filtered[2:670]
 # test <- CPM_table_total_filtered_PCA +1
 
-data.PC <- prcomp(t(test),scale. = T)
+data.PC <- prcomp(t(test),scale. = F)
+plot(data.PC$x[,1:2],col=color,pch = 19,outlie)
