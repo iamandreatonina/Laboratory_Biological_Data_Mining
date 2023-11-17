@@ -1,6 +1,6 @@
 # BiocManager::install('sva')
 library(sva)
-library(tibble)
+library(tidyverse)
 library(dplyr)
 library(readxl)
 library(ggplot2)
@@ -65,7 +65,6 @@ tumor_adjusted <- add_column(tumor_adjusted, 'ensembl_gene_id' = Tumor$ensembl_g
 library(edgeR)
 # install.packages('DESeq2')
 library(DESeq2)
-library(tidyverse)
 
 # Let`s check how many human specific genes we have in our dataset
 HSgenes_tumor <- tumor_adjusted %>% dplyr::filter(tumor_adjusted$ensembl_gene_id %in% Human_genes$`Ensembl ID`) 
@@ -118,6 +117,11 @@ CPM_tumor <-  as.data.frame(round(cpm(edge_n_tumor),2))
 
 CPM_control_df <- tidyr::gather(CPM_control,key = 'sample',value = 'CPM')
 CPM_tumor_df <- tidyr::gather(CPM_tumor,key = 'sample',value = 'CPM')
+
+# Save the CPM table 
+write.csv(CPM_tumor,file = 'CPM_Tumor_dataframe.csv',row.names = F)
+write.csv(CPM_control,file = 'CPM_Control_dataframe.csv',row.names = F)
+
 CPM_tumor_df_toplot <- tidyr::gather(CPM_tumor[1:20],key = 'sample',value = 'CPM')
 
 jpeg(filename = '../images/control_TMM_boxplot.jpeg')
@@ -139,13 +143,23 @@ dev.off()
 
 ##### PCA analysis 
 
-CPM_table_total <- as.data.frame(merge(CPM_control,CPM_tumor,by = 0))
-color<- c(rep('darkgreen',29),rep('indianred',640))
-# we need to have both for the columns and the row a variance different from zero (because divide for the varaince )
-CPM_table_total_filtered<-CPM_table_total[ , which(apply(CPM_table_total, 2, var) != 0)] 
-CPM_table_total_filtered<- CPM_table_total_filtered[which(apply(CPM_table_total_filtered, 1, var) != 0),]
-CPM_table_total_filtered_PCA<-CPM_table_total_filtered[2:670]
-# test <- CPM_table_total_filtered_PCA +1
+# CPM_table_total <- as.data.frame(merge(CPM_control,CPM_tumor,by = 0))
+# color<- c(rep('darkgreen',29),rep('indianred',640))
+# # we need to have both for the columns and the row a variance different from zero (because divide for the varaince )
+# CPM_table_total_filtered<-CPM_table_total[ , which(apply(CPM_table_total, 2, var) != 0)] 
+# CPM_table_total_filtered<- CPM_table_total_filtered[which(apply(CPM_table_total_filtered, 1, var) != 0),]
+# CPM_table_total_filtered_PCA<-CPM_table_total_filtered[2:670]
+# 
+# # PCA
+# data.PC <- prcomp(t(CPM_table_total_filtered_PCA),scale. = F)
+# plot(data.PC$x[,1:2],col=color,pch = 19) # presence of an outlier for PC1 over 500000
+# 
+# #select outlier and remove it from the data 
+# outlier <- as.data.frame(data.PC$x[,1:2]) 
+# outlier <- outlier %>% dplyr::filter(outlier$PC1 > 500000) %>% row.names()
+# 
+# color<- c(rep('darkgreen',29),rep('indianred',639))
+# data.PCA <- data.PC$x[,1:2]
+# data.PCA <- data.PCA[!row.names(data.PCA) %in% outlier,]
+# plot(data.PCA,col=color,pch = 19)
 
-data.PC <- prcomp(t(test),scale. = F)
-plot(data.PC$x[,1:2],col=color,pch = 19,outlie)
