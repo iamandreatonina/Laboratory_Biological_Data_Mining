@@ -253,6 +253,7 @@ heatmap(as.matrix(cpm_table_log[which(rownames(cpm_table_log) %in% rownames(DEGs
 dev.off()
 
 ############ heatmap human specific
+library(plotly)
 
 col <- rep('chartreuse4', 670)
 col[which(info_samples$condition == 'T')] <- 'burlywood3' 
@@ -271,23 +272,36 @@ dev.off()
 
 
 ##### PCA analysis 
+Diff_expressed <- DEGs[which(DEGs$class != '='),]
+PCA_cpm_log_nonHS <- cpm_table_log[which(rownames(cpm_table_log) %in% rownames(Diff_expressed)),]
 PCA_cpm_log <- cpm_table_log[which(rownames(cpm_table_log) %in% rownames(DEGs_selected)),]
 
 # # we need to have both for the columns and the row a variance different from zero (because divide for the varaince )
 PCA_cpm_log_filtered<-PCA_cpm_log[,which(apply(PCA_cpm_log, 2, var) != 0)]
 PCA_cpm_log_filtered<- PCA_cpm_log_filtered[which(apply(PCA_cpm_log_filtered, 1, var) != 0),]
 color<- c(rep('darkgreen',30),rep('indianred',640))
+
+PCA_cpm_log_nonHS_filtered <- PCA_cpm_log_nonHS[,which(apply(PCA_cpm_log_nonHS, 2, var) != 0)]
+PCA_cpm_log_nonHS_filtered <- PCA_cpm_log_nonHS[which(apply(PCA_cpm_log_nonHS, 1, var) != 0),]
+
 # # PCA plot
 data.PC <- prcomp(t(PCA_cpm_log_filtered),scale. = T)
 jpeg(filename = '../images/PCA_plot_DEGs_log_HS.jpeg')
-plot(data.PC$x[,1:2],col=color,pch = 19) # presence of an outlier for PC1 over 500000
+plot(data.PC$x[,1:2],col=color,pch = 19) 
 dev.off()
 
+data.PC_nonHG <- prcomp(t(PCA_cpm_log_nonHS_filtered),scale. = T)
+plot(data.PC_nonHG$x[,1:2],col=color,pch = 19) 
+
 # # PCA plot of tumor only
-data.PC.tumor <- prcomp(t(PCA_cpm_log_filtered[31:670]),scale. = T)
+data.PC.tumor <- prcomp(t(PCA_cpm_log_filtered[31:670]),scale. = T )
 jpeg(filename = '../images/PCA_plot_DEGs_log_tumor.jpeg')
-plot(data.PC.tumor$x[,1:2],pch = 19) # presence of an outlier for PC1 over 500000
+plot(data.PC.tumor$x[,1:2],pch = 19)
 dev.off()
+
+data.PC_nonHG_tumor <- prcomp(t(PCA_cpm_log_nonHS_filtered[31:670]),scale. = T )
+plot(data.PC_nonHG_tumor$x[,1:2],pch = 19)
+
 
 ##### Partitioning around medoids, need to also to install cmake
 # install.packages('factoextra')
@@ -305,12 +319,23 @@ fviz_nbclust(data.PC.tumor$x,FUNcluster = cluster::pam,k.max = 15)
 fviz_nbclust(data.PC.tumor$x,FUNcluster = cluster::pam,k.max = 15,method = 'gap_stat')+ theme_classic()
 fviz_nbclust(data.PC.tumor$x,FUNcluster = cluster::pam,k.max = 15, method = "wss")
 
+# for control-tumor -> 2 clusters as seen from graphs under no HS
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 10)
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 10,method = 'gap_stat')+ theme_classic()
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 10, method = "wss")
+
+# For subtypes of tumors no HS
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 15)
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 15,method = 'gap_stat')+ theme_classic()
+fviz_nbclust(data.PC_nonHG_tumor$x,FUNcluster = cluster::pam,k.max = 15, method = "wss")
+
 # PAM on control-tumor
 pam1<-eclust(data.PC$x, "pam", k=9)
+pam1_nonHS <- eclust(data.PC_nonHG$x,'pam',k=9)
 
 # PAM tumors subypes
 pam2<-eclust(data.PC.tumor$x, "pam", k=8)
-
+pam2_nonHS <- eclust(data.PC_nonHG_tumor$x,'pam',k=8)
 ##### hierarchical clustering
 
 #calculate distances between observations and create a simple dendogram
@@ -329,4 +354,107 @@ rect.hclust(hc2,k=2,border = 'red')
 clust.vec<-cutree(hc2,k=8)
 fviz_cluster(list(data=data.PC.tumor$x, cluster=clust.vec))
 
-clusters <- mutate(cpm_table_log[31:670],cluster =clust.vec)
+# clusters <- mutate(cpm_table_log[31:670],cluster =clust.vec
+
+clusterino_pam2<-as.data.frame((pam2$clustering))
+components<-data.PC.tumor[["x"]]
+components<-data.frame(components)
+components<-cbind(components, clusterino_pam2)
+components$PC2<- -components$PC2
+fig<-plot_ly(components, x=~PC1, y=~PC2, color=clusterino_pam2$`(pam2$clustering)`,colors=c('cadetblue1', 'red', 
+'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,type='scatter',mode='markers') #  %>%
+# layout(legend = list(title = list(text = 'color')))
+
+fig
+
+fig2<-plot_ly(components, x=~PC1, y=~PC2, z=~PC3,color=clusterino_pam2$`(pam2$clustering)`,colors=c('cadetblue1', 'red', 
+                                                                                            'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,mode='markers') #  %>%
+fig2
+
+#######
+clusterino_pam2_nonHS<-as.data.frame((pam2_nonHS$clustering))
+components_nonHS<-data.PC_nonHG_tumor$x
+# components<-data.frame(components)
+components_nonHS<-cbind(components_nonHS, clusterino_pam2_nonHS)
+components_nonHS$PC2<- -components_nonHS$PC2
+fig_nonHS<-plot_ly(components_nonHS, x=~PC1, y=~PC2, color=clusterino_pam2_nonHS$`(pam2_nonHS$clustering)`,colors=c('cadetblue1', 'red', 
+                                                                                            'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,type='scatter',mode='markers') #  %>%
+# layout(legend = list(title = list(text = 'color')))
+
+fig_nonHS
+
+fig2_nonHS<-plot_ly(components_nonHS, x=~PC1, y=~PC2, z=~PC3,color=clusterino_pam2_nonHS$`(pam2_nonHS$clustering)`,colors=c('cadetblue1', 'red', 
+                                                                                                    'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,mode='markers') #  %>%
+fig2_nonHS
+# layout(legend = list(title = list(text = 'color')))
+
+
+clusterino_pam2$type <- 'pediatric'
+clusterino_pam2$type[533:640] <- 'adult'
+#ADJUSTED FOR DIFFERENT AGE CLASSIFICATION BETWEEN THE STUDIES 
+clusterino_pam2$type[rownames(clusterino_pam2) %in% c('CMUTALLS4','T59','T91','T89','T87','T82','T81','T74','T59','T112','T102','SIHTALLS32','SIHTALLS25','SIHTALLS12','H301TALLS3','H301TALLS13','H301TALLS11','CMUTALLS9','CMUTALLS13','T67','T77','T103')] <- 'pediatric'
+components2 <- as.data.frame(data.PC.tumor$x)
+components2<-cbind(components2, clusterino_pam2)
+components2$PC2 <- -components2$PC2
+fig3<-plot_ly(components2, x=~PC1, y=~PC2, color=clusterino_pam2$type,colors=c('red2', 'blue4') ,type='scatter',mode='markers')
+fig3
+
+fig4<-plot_ly(components2, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2$type,colors=c('darkred', 'blue4') ,mode='markers')
+fig4
+
+clusterino_pam2_nonHS$type <- 'pediatric'
+clusterino_pam2_nonHS$type[533:640] <- 'adult'
+#ADJUSTED FOR DIFFERENT AGE CLASSIFICATION BETWEEN THE STUDIES 
+clusterino_pam2_nonHS$type[rownames(clusterino_pam2_nonHS) %in% c('CMUTALLS4','T59','T91','T89','T87','T82','T81','T74','T59','T112','T102','SIHTALLS32','SIHTALLS25','SIHTALLS12','H301TALLS3','H301TALLS13','H301TALLS11','CMUTALLS9','CMUTALLS13','T67','T77','T103')] <- 'pediatric'
+components2_nonHS <- as.data.frame(data.PC_nonHG_tumor$x)
+components2_nonHS<-cbind(components2_nonHS, clusterino_pam2_nonHS)
+components2_nonHS$PC2 <- -components2_nonHS$PC2
+fig3_nonHS<-plot_ly(components2_nonHS, x=~PC1, y=~PC2, color=clusterino_pam2_nonHS$type,colors=c('red2', 'blue4') ,type='scatter',mode='markers')
+fig3_nonHS
+
+fig4_nonHS<-plot_ly(components2_nonHS, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2_nonHS$type,colors=c('darkred', 'blue4') ,mode='markers')
+fig4_nonHS
+
+
+setwd("~/Desktop/magistrale_Qcb/3master_QCB_first_semester_second_year/biological_data_mining_blanzieri/Laboratory_Biological_Data_Mining/Dataset/GSE181157")
+metadata<-  readxl::read_xlsx('GSE181157_SampleMetadata.xlsx')
+metadata$`DFCI ID` <- rownames(clusterino_pam2)[39:211]
+  
+setwd("~/Desktop/magistrale_Qcb/3master_QCB_first_semester_second_year/biological_data_mining_blanzieri/Laboratory_Biological_Data_Mining/Datasets_finals")
+
+# metadata$`Final Risk`<- replace(metadata$`Final Risk`, metadata$`Final Risk` == 'Not Available', NA) 
+
+clusterino_pam2$risk <- 'Not Available'
+clusterino_pam2$risk[rownames(clusterino_pam2) %in% metadata$`DFCI ID`] <- metadata$`Final Risk`
+componet3 <- data.PC.tumor$x
+componet3 <- cbind(componet3,clusterino_pam2)
+componet3$PC2 <- -componet3$PC2 
+
+fig5<-plot_ly(componet3, x=~PC1, y=~PC2, color=clusterino_pam2$risk,colors=c('red2', 'blue4') ,type='scatter',mode='markers')
+fig5
+
+fig6<-plot_ly(componet3, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2$risk,colors=c('darkred', 'blue4') ,mode='markers')
+fig6
+
+#####
+setwd("~/Desktop/magistrale_Qcb/3master_QCB_first_semester_second_year/biological_data_mining_blanzieri/Laboratory_Biological_Data_Mining/Dataset/GSE181157")
+metadata_nonHS<-  readxl::read_xlsx('GSE181157_SampleMetadata.xlsx')
+metadata_nonHS$`DFCI ID` <- rownames(clusterino_pam2_nonHS)[39:211]
+
+setwd("~/Desktop/magistrale_Qcb/3master_QCB_first_semester_second_year/biological_data_mining_blanzieri/Laboratory_Biological_Data_Mining/Datasets_finals")
+
+# metadata$`Final Risk`<- replace(metadata$`Final Risk`, metadata$`Final Risk` == 'Not Available', NA) 
+
+clusterino_pam2_nonHS$risk <- 'Not Available'
+clusterino_pam2_nonHS$risk[rownames(clusterino_pam2_nonHS) %in% metadata_nonHS$`DFCI ID`] <- metadata_nonHS$`Final Risk`
+componet3_nonHS <- data.PC_nonHG_tumor$x
+componet3_nonHS <- cbind(componet3_nonHS,clusterino_pam2_nonHS)
+componet3_nonHS$PC2 <- -componet3_nonHS$PC2 
+
+fig5_nonHS<-plot_ly(componet3_nonHS, x=~PC1, y=~PC2, color=clusterino_pam2_nonHS$risk,colors=c('red2', 'blue4') ,type='scatter',mode='markers')
+fig5_nonHS
+
+fig6_nonHS<-plot_ly(componet3, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2$risk,colors=c('darkred', 'blue4') ,mode='markers')
+fig6_nonHS
+
+
