@@ -121,8 +121,8 @@ CPM_control_df <- tidyr::gather(CPM_control,key = 'sample',value = 'CPM')
 CPM_tumor_df <- tidyr::gather(CPM_tumor,key = 'sample',value = 'CPM')
 
 # Save the CPM table 
-write.csv(CPM_tumor,file = 'CPM_Tumor_dataframe.csv',row.names = T)
-write.csv(CPM_control,file = 'CPM_Control_dataframe.csv',row.names = T)
+# write.csv(CPM_tumor,file = 'CPM_Tumor_dataframe.csv',row.names = T)
+# write.csv(CPM_control,file = 'CPM_Control_dataframe.csv',row.names = T)
 
 CPM_tumor_df_toplot <- tidyr::gather(CPM_tumor[1:20],key = 'sample',value = 'CPM')
 
@@ -157,11 +157,31 @@ info_samples<-cbind(info_sample_1, info_sample_2[1:2])
 info_samples$condition<-c(rep("H",30),rep("T",640))
 info_samples$replicate<-c(rep(1,670))
 
+# new dataframe for the info samples to use to filter the 0 from our dataset
+info_samples_new_cond<-info_samples
+info_samples_new_cond$condition<-"AT"
+info_samples_new_cond$condition[1:10]<-"PH"
+info_samples_new_cond$condition[11:30]<-"AH"
+info_samples_new_cond$condition[31:562] <- 'PT'
+info_samples_new_cond$condition[info_samples_new_cond$sample %in% c('CMUTALLS4','T59','T91','T89','T87','T82','T81','T74','T59','T112','T102','SIHTALLS32','SIHTALLS25','SIHTALLS12','H301TALLS3','H301TALLS13','H301TALLS11','CMUTALLS9','CMUTALLS13','T67','T77','T103')] <-"PT"
+
+# let's filter the dataset
+# treshold definition
+
+median_thr<-5
+cond_tresh<-0.5
+filter_vec<-apply(total_adjusted1, 1, function(y) max(by(y,info_samples_new_cond$condition, function(x) median(x>=median_thr))) )
+filter_counts_df <- total_adjusted1[filter_vec>=cond_tresh,]
+
+# write.csv(filter_counts_df,file ='filtered_data_ALL.csv',row.names = T )
 
 # Now we can create the DGEList object
-edge_c_total <- DGEList(counts = total_adjusted1, group=info_samples$condition, samples=info_samples, genes=total_adjusted1)
-edge_n_total <- calcNormFactors(edge_c_total,method = 'TMM')
+# edge_c_total <- DGEList(counts = total_adjusted1, group=info_samples$condition, samples=info_samples, genes=total_adjusted1)
+# edge_n_total <- calcNormFactors(edge_c_total,method = 'TMM')
 
+#######
+edge_c_total <- DGEList(counts = filter_counts_df, group=info_samples$condition, samples=info_samples, genes=filter_counts_df)
+edge_n_total <- calcNormFactors(edge_c_total,method = 'TMM')
 # We create the cpm table
 cpm_table <-as.data.frame(round(cpm(edge_n_total),2)) # the library size is scaled by the normalization factor
 
@@ -202,6 +222,8 @@ DEGs <- DEGs[order(DEGs$logFC, decreasing = T),] # we order based on the fold ch
 
 table(DEGs$class)
 # -:2942,+:683,=:7669
+# after :    -:2693   +:756    =:5986
+    
 
 
 # Let`s check how many human specific genes we have in the up regulated and down regulated genes
@@ -210,6 +232,8 @@ DEGs_Hsgenes <- DEGs %>% dplyr::filter(rownames(DEGs) %in% Human_genes$`Ensembl 
 Up_HSgenes <- DEGs[DEGs$class=='+',] %>% dplyr::filter(rownames(DEGs[DEGs$class=='+',]) %in% Human_genes$`Ensembl ID`) 
 Down_HSgenes <- DEGs[DEGs$class=='-',] %>% dplyr::filter(rownames(DEGs[DEGs$class=='-',]) %in% Human_genes$`Ensembl ID`) 
 
+# after the filter of median more than 5 
+# down-reg 103 and 19 up reg
 
 # Display the results using a volcano plot (x-axes: log FoldChange, y-axes: inverse function of the p-value).
 # We can see the most significant DEGs colored in green, which are genes that surpass a threshold set on both the p-value
@@ -456,5 +480,83 @@ fig5_nonHS
 
 fig6_nonHS<-plot_ly(componet3, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2$risk,colors=c('darkred', 'blue4') ,mode='markers')
 fig6_nonHS
+
+#########
+clusterino_pam2$Cell_type <- 'Unkown'
+clusterino_pam2$Cell_type[533:640] <- 'T cell' #by letaruet of only T cells 
+clusterino_pam2$Cell_type[rownames(clusterino_pam2) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
+componet4 <- data.PC.tumor$x
+componet4 <- cbind(componet4,clusterino_pam2)
+componet4$PC2 <- -componet4$PC2
+
+fig7<-plot_ly(componet4, x=~PC1, y=~PC2, color=clusterino_pam2$Cell_type,colors=c('red', 'blue','green') ,type='scatter',mode='markers')
+fig7
+
+fig8<-plot_ly(componet4, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2$Cell_type,colors=c('darkred', 'blue4','green','orange') ,mode='markers')
+fig8
+
+clusterino_pam2_nonHS$Cell_type <- 'Unkown'
+clusterino_pam2_nonHS$Cell_type[533:640] <- 'T cell' #by letaruet of only T cells 
+clusterino_pam2_nonHS$Cell_type[rownames(clusterino_pam2_nonHS) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
+componet4_nonHS <- data.PC_nonHG_tumor$x
+componet4_nonHS <- cbind(componet4_nonHS,clusterino_pam2_nonHS)
+componet4_nonHS$PC2 <- -componet4_nonHS$PC2
+
+fig7_nonHS<-plot_ly(componet4_nonHS, x=~PC1, y=~PC2, color=clusterino_pam2_nonHS$Cell_type,colors=c('red2', 'blue4') ,type='scatter',mode='markers')
+fig7_nonHS
+
+fig8_nonHS<-plot_ly(componet4_nonHS, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam2_nonHS$Cell_typ,colors=c('darkred', 'blue4','green','orange') ,mode='markers')
+fig8_nonHS
+
+# ############ 
+
+#HS 
+clusterino_pam1<-as.data.frame((pam1$clustering))
+clusterino_pam1$C_T <- "Tumor"
+clusterino_pam1$C_T[rownames(clusterino_pam1) %in% c("X817_T","X845_B","X845_T","X858_B","X858_T","X867_B","X867_T","X899_B","X899_T","X817_B","TU0049_CD4_HC","TU0049_CD8_HC",
+                                                     "TU0051_CD4_HC","TU0051_CD8_HC","TU0054_CD4_HC","TU0054_CD8_HC","XT0130_CD4_HC","XT0130_CD8_HC","XT0133_CD4_HC","XT0133_CD8_HC",
+                                                     "XT0108_CD4_HC","XT0108_CD8_HC","XT0115_CD4_HC","XT0115_CD8_HC","XT0127_CD4_HC","XT0127_CD8_HC","XT0131_CD4_HC","XT0131_CD8_HC",
+                                                     "XT0141_CD4_HC","XT0141_CD8_HC")] <- 'Control'
+clusterino_pam1$type <- 'pediatric'
+clusterino_pam1$type[563:670] <- 'adult'
+clusterino_pam1$type[rownames(clusterino_pam1) %in% c('CMUTALLS4','T59','T91','T89','T87','T82','T81','T74','T59','T112','T102','SIHTALLS32','SIHTALLS25','SIHTALLS12','H301TALLS3','H301TALLS13','H301TALLS11','CMUTALLS9','CMUTALLS13','T67','T77','T103')] <- 'pediatric'
+clusterino_pam1$type[11:30] <- 'adult'
+clusterino_pam1$risk <- 'Not Available'
+clusterino_pam1$risk[rownames(clusterino_pam1) %in% metadata$`DFCI ID`] <- metadata$`Final Risk`
+clusterino_pam1$Cell_type <- 'Unkown'
+clusterino_pam1$Cell_type[11:30] <- 'T Cell'
+clusterino_pam1$Cell_type[563:670] <- 'T cell' #by letaruet of only T cells 
+clusterino_pam1$Cell_type[rownames(clusterino_pam1) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
+component5 <- data.PC$x
+component5<- cbind(component5,clusterino_pam1)
+component5$PC2 <- -component5$PC2
+
+fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','cross'), mode='markers')
+fig9
+
+#### Non HS 
+clusterino_pam1_nonHS<-as.data.frame((pam1_nonHS$clustering))
+clusterino_pam1_nonHS$C_T <- "Tumor"
+clusterino_pam1_nonHS$C_T[rownames(clusterino_pam1_nonHS) %in% c("X817_T","X845_B","X845_T","X858_B","X858_T","X867_B","X867_T","X899_B","X899_T","X817_B","TU0049_CD4_HC","TU0049_CD8_HC",
+                                                                 "TU0051_CD4_HC","TU0051_CD8_HC","TU0054_CD4_HC","TU0054_CD8_HC","XT0130_CD4_HC","XT0130_CD8_HC","XT0133_CD4_HC","XT0133_CD8_HC",
+                                                                 "XT0108_CD4_HC","XT0108_CD8_HC","XT0115_CD4_HC","XT0115_CD8_HC","XT0127_CD4_HC","XT0127_CD8_HC","XT0131_CD4_HC","XT0131_CD8_HC",
+                                                                 "XT0141_CD4_HC","XT0141_CD8_HC")] <- 'Control'
+clusterino_pam1_nonHS$type <- 'pediatric'
+clusterino_pam1_nonHS$type[563:670] <- 'adult'
+clusterino_pam1_nonHS$type[rownames(clusterino_pam1_nonHS) %in% c('CMUTALLS4','T59','T91','T89','T87','T82','T81','T74','T59','T112','T102','SIHTALLS32','SIHTALLS25','SIHTALLS12','H301TALLS3','H301TALLS13','H301TALLS11','CMUTALLS9','CMUTALLS13','T67','T77','T103')] <- 'pediatric'
+clusterino_pam1_nonHS$type[11:30] <- 'adult'
+clusterino_pam1_nonHS$risk <- 'Not Available'
+clusterino_pam1_nonHS$risk[rownames(clusterino_pam1_nonHS) %in% metadata$`DFCI ID`] <- metadata$`Final Risk`
+clusterino_pam1_nonHS$Cell_type <- 'Unkown'
+clusterino_pam1_nonHS$Cell_type[11:30] <- 'T Cell'
+clusterino_pam1_nonHS$Cell_type[563:670] <- 'T cell' #by letaruet of only T cells 
+clusterino_pam1_nonHS$Cell_type[rownames(clusterino_pam1_nonHS) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
+component6 <- data.PC_nonHG$x
+component6<- cbind(component5,clusterino_pam1_nonHS)
+component6$PC2 <- -component6$PC2
+
+fig10<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','cross'), mode='markers')
+fig10
+
 
 
