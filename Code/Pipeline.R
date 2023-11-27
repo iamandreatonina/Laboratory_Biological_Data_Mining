@@ -173,7 +173,6 @@ cond_tresh<-0.5
 filter_vec<-apply(total_adjusted1, 1, function(y) max(by(y,info_samples_new_cond$condition, function(x) median(x>=median_thr))) )
 filter_counts_df <- total_adjusted1[filter_vec>=cond_tresh,]
 
-# write.csv(filter_counts_df,file ='filtered_data_ALL.csv',row.names = T )
 
 # Now we can create the DGEList object
 # edge_c_total <- DGEList(counts = total_adjusted1, group=info_samples$condition, samples=info_samples, genes=total_adjusted1)
@@ -272,6 +271,14 @@ dev.off()
 
 #for improving the clusterization we set the cpm table as logarithmic
 cpm_table_log <- as.data.frame(round(log10(cpm(edge_n_total)+1),2))
+# write.csv(cpm_table_log,file ='Acute_lymphoide_leukemia_cpm_log_expression_table.csv',row.names = T )
+
+# moment1 <- read.csv('Acute_lymphoide_leukemia_cpm_log_expression_table.csv')
+# 
+# moment1 <- moment1 %>% column_to_rownames('gene_names')
+# write.csv(moment1,file ='Acute_lymphoide_leukemia_cpm_log_expression_table.csv')
+
+
 jpeg(filename = '../images/Heatmap_plot_DEGs_log.jpeg')
 heatmap(as.matrix(cpm_table_log[which(rownames(cpm_table_log) %in% rownames(DEGs_selected)),]),ColSideColors = col, cexCol = 0.5,margins = c(4,4), col = pal, cexRow = 0.2)
 dev.off()
@@ -524,14 +531,14 @@ clusterino_pam1$type[11:30] <- 'adult'
 clusterino_pam1$risk <- 'Not Available'
 clusterino_pam1$risk[rownames(clusterino_pam1) %in% metadata$`DFCI ID`] <- metadata$`Final Risk`
 clusterino_pam1$Cell_type <- 'Unkown'
-clusterino_pam1$Cell_type[11:30] <- 'T Cell'
+clusterino_pam1$Cell_type[1:30] <- 'Controls'
 clusterino_pam1$Cell_type[563:670] <- 'T cell' #by letaruet of only T cells 
 clusterino_pam1$Cell_type[rownames(clusterino_pam1) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
 component5 <- data.PC$x
 component5<- cbind(component5,clusterino_pam1)
 component5$PC2 <- -component5$PC2
 
-fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','cross'), mode='markers')
+fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','darkgreen','orange'),  symbol = clusterino_pam1$type, symbols = c('square','circle'), mode='markers', size=100)
 fig9
 
 #### Non HS 
@@ -548,15 +555,143 @@ clusterino_pam1_nonHS$type[11:30] <- 'adult'
 clusterino_pam1_nonHS$risk <- 'Not Available'
 clusterino_pam1_nonHS$risk[rownames(clusterino_pam1_nonHS) %in% metadata$`DFCI ID`] <- metadata$`Final Risk`
 clusterino_pam1_nonHS$Cell_type <- 'Unkown'
-clusterino_pam1_nonHS$Cell_type[11:30] <- 'T Cell'
+clusterino_pam1_nonHS$Cell_type[1:30] <- 'Controls'
 clusterino_pam1_nonHS$Cell_type[563:670] <- 'T cell' #by letaruet of only T cells 
 clusterino_pam1_nonHS$Cell_type[rownames(clusterino_pam1_nonHS) %in% metadata$`DFCI ID`] <- metadata$Diagnosis
 component6 <- data.PC_nonHG$x
 component6<- cbind(component5,clusterino_pam1_nonHS)
 component6$PC2 <- -component6$PC2
 
-fig10<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','cross'), mode='markers')
-fig10
+fig9_nonHS<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','triangle-up'), mode='markers')
+fig9_nonHS
+
+# 
+# write.csv(clusterino_pam1, file =  'metadata.csv',row.names = T)
+# write.csv(clusterino_pam1_nonHS, file =  'metadata_nonHS.csv',row.names = T)
+##############
+
+library(clusterProfiler)
+library(biomaRt)
+library(org.Hs.eg.db)
+
+ensmebl <- useMart(biomart = 'ensembl',dataset = 'hsapiens_gene_ensembl')
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = rownames(DEGs), mart = ensmebl)
+
+DEGs_2 <- rownames_to_column(DEGs, var = 'ensembl_gene_id')
+
+DEGs_merge_convert <- merge(DEGs_2, convert, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+DEGs_merge_convert<-DEGs_merge_convert[which(!is.na(DEGs_merge_convert$entrezgene_id)),] 
+
+DEGs_merge_convert<-DEGs_merge_convert[-which(duplicated(DEGs_merge_convert$entrezgene_id)),]
+
+Up_DEGs_merge_convert <- DEGs_merge_convert %>% dplyr::filter(DEGs_merge_convert$class == '+')
+
+Down_DEGs_merge_convert <- DEGs_merge_convert %>% dplyr::filter(DEGs_merge_convert$class == '-')
+# UP
+ego_BP_UP <- enrichGO(gene = Up_DEGs_merge_convert$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.05, qvalueCutoff = 0.05)
+
+barplot(ego_BP_UP, showCategory = 15)
+
+dotplot(ego_BP_UP, showCategory=15)
+
+heatplot(ego_BP_UP, showCategory = 5)
+
+#Down
+ego_BP_DW <- enrichGO(gene = Down_DEGs_merge_convert$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.05, qvalueCutoff = 0.05)
+
+barplot(ego_BP_DW, showCategory = 15)
+
+dotplot(ego_BP_DW, showCategory=15)
+
+heatplot(ego_BP_DW, showCategory = 5)
+#################
+
+convert_HS <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = rownames(DEGs_Hsgenes), mart = ensmebl)
+
+DEGs_Hsgenes_2 <- rownames_to_column(DEGs_Hsgenes, var = 'ensembl_gene_id')
+
+DEGs_merge_convert_HS <- merge(DEGs_Hsgenes_2, convert_HS, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+DEGs_merge_convert_HS<-DEGs_merge_convert_HS[which(!is.na(DEGs_merge_convert_HS$entrezgene_id)),] 
+
+DEGs_merge_convert_HS<-DEGs_merge_convert_HS[-which(duplicated(DEGs_merge_convert_HS$entrezgene_id)),]
+
+Up_DEGs_merge_convert_HS<- DEGs_merge_convert_HS %>% dplyr::filter(DEGs_merge_convert_HS$class == '+')
+
+Down_DEGs_merge_convert_HS <- DEGs_merge_convert_HS %>% dplyr::filter(DEGs_merge_convert_HS$class == '-')
+# UP
+ego_BP_UP_HS <- enrichGO(gene = Up_DEGs_merge_convert_HS$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.15, qvalueCutoff = 0.1)
+
+## Molecular function
+
+ego_MF_UP <- enrichGO(gene = Up_DEGs_merge_convert$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'MF',pAdjustMethod = 'BH',pvalueCutoff = 0.05, qvalueCutoff = 0.05)
+
+barplot(ego_MF_UP, showCategory = 15)
+
+dotplot(ego_MF_UP, showCategory=15)
+
+heatplot(ego_MF_UP, showCategory = 5)
+
+#Down
+ego_MF_DW <- enrichGO(gene = Down_DEGs_merge_convert$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'MF',pAdjustMethod = 'BH',pvalueCutoff = 0.05, qvalueCutoff = 0.05)
+
+barplot(ego_MF_DW, showCategory = 15)
+
+dotplot(ego_MF_DW, showCategory=15)
+
+heatplot(ego_MF_DW, showCategory = 5)
+#################
+
+# UP
+ego_MF_UP_HS <- enrichGO(gene = Up_DEGs_merge_convert_HS$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'MF',pAdjustMethod = 'BH',pvalueCutoff = 0.08, qvalueCutoff = 0.2)
 
 
+barplot(ego_MF_UP_HS)
 
+dotplot(ego_MF_UP_HS, showCategory=15)
+
+heatplot(ego_MF_UP_HS, showCategory = 5)
+
+
+#Down
+ego_MF_DW_HS <- enrichGO(gene = Down_DEGs_merge_convert_HS$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'MF',pAdjustMethod = 'BH',pvalueCutoff = 0.2, qvalueCutoff = 0.2)
+
+barplot(ego_MF_DW_HS)
+
+dotplot(ego_MF_DW_HS, showCategory=15)
+
+heatplot(ego_MF_DW_HS, showCategory = 5)
+
+### KEGG enrichment
+
+WP_DW <- enrichWP(gene = Down_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05 )
+
+head(WP_DW)
+
+WP_UP <- enrichWP(gene = Up_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05 )
+
+head(WP_UP)
+
+## human specific
+ 
+WP_HS_UP <- enrichWP(gene = Up_DEGs_merge_convert_HS$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1 )
+
+head(WP_HS_UP)
+
+
+WP_HS_DW <- enrichWP(gene = Down_DEGs_merge_convert_HS$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 1 )
+
+head(WP_HS_DW) #no pathway 
+
+###### check tiplogy of the HS gene up and down 
+
+UP_DW_HS <- c(rownames(Up_HSgenes),rownames(Down_HSgenes))
+
+
+Human_genes_origin_UP_DW <- Human_genes %>% dplyr::filter(Human_genes$`Ensembl ID` %in% UP_DW_HS)
+
+library(RColorBrewer)
+
+barplot(table(Human_genes_origin_UP_DW$`General Mechanism of Origin`), names.arg = c('1','2','3','4','5','6','7','8','9') ,las = 2, horiz = T, col=brewer.pal(n=9, name="Spectral"))
+legend("topright",legend=c('de novo origin','amplification','loss','sequence alteration','structure alteration','undefined','lost in chimpanzee', 'new non-coding gene','regulatory region alteration'), fill=brewer.pal(n=9, name="Spectral"))
