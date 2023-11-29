@@ -1,0 +1,501 @@
+---
+title: "ML_Trial"
+author: "Andrea,Gloria,Lorenzo,Thomas"
+date: "`r Sys.Date()`"
+output: html_document
+---
+# Preparatory steps
+  Loading packages
+  Store package names in a vectors for ease of access and to load them easily 
+```{r, message=FALSE, warning=FALSE}
+# Set the root directory for knitr
+knitr::opts_knit$set(root.dir = "D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+
+# Define a list of packages to be loaded
+PACKAGES <- c(
+  "randomForest",    # For random forest modeling
+  "caret",           # For machine learning model training and evaluation
+  "gmodels",         # Provides tools for model diagnostics
+  "yardstick",       # For model evaluation metrics
+  "ggplot2",         # For data visualization
+  "corrplot",        # For correlation plot visualization
+  "tidyverse",       # Collection of packages for data manipulation and visualization
+  "factoextra",      # Additional tools for clustering and factor analysis
+  "FactoMineR",      # For exploratory data analysis and multivariate analysis
+  "glue",            # For string interpolation
+  "plotly",          # Interactive plots
+  "dplyr",           # To manage data frames more efficiently
+  "kernlab",         # Kernel-based machine learning methods
+  "readr",           # For reading and parsing data
+  "e1071",           # For SVM modeling
+  "class",           # Various classification methods
+  "MASS"             # Modern Applied Statistics with S
+)
+
+# Load the specified packages
+invisible(lapply(PACKAGES, library, character.only = TRUE))
+
+
+```
+
+## Managing the data to use
+
+```{r,warning=FALSE}
+# Load the data
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+ML_data <- data.frame(read_csv("ML_data.csv", col_names = TRUE))
+
+# Set rownames
+ML_data <- subset(ML_data, select = -((ncol(ML_data) - 4):ncol(ML_data)))
+row.names(ML_data) <- ML_data$...1
+
+# Eliminate the columns that are not needed
+my_data <- subset(ML_data, select = -c(...1,risk...127))
+#my_data$risk...127 <- NULL
+
+# Subset data frame by condition
+df_Tumor <- subset(my_data, C_T...125 == "Tumor")
+```
+
+## NUMBER COATING
+
+```{r First dumb try }
+# Getting ready to do predictions
+# Number coating the values
+## Specify the columns to be label encoded
+columns_to_encode <- c("type...126", "C_T...125", "Cell_type...128")
+columns_to_encode2 <- c("type...126", "C_T...125")
+
+# Create a new data frame without rows where 'Cell_type...128' has value "Unkown"
+my_data_train <- subset(my_data, Cell_type...128 != "Unkown")
+
+# Convert specified columns to factor type
+my_data_train <- my_data_train %>% mutate_at(columns_to_encode, as.factor)
+
+# Display levels of 'Cell_type...128'
+levels(my_data_train$Cell_type...128)
+
+# Convert specified columns to factor type for the entire dataset
+my_data_encoded <- my_data %>% mutate_at(columns_to_encode, as.factor)
+
+# Keep a copy for safety and ease of use
+my_data_encoded_pure <- my_data_encoded
+
+# Do the number coating as numbers
+encoded <- my_data_encoded %>% mutate_at(columns_to_encode, as.numeric)
+train_data <- my_data_train %>% mutate_at(columns_to_encode, as.numeric)
+
+# Create a dictionary-like structure to store the labels
+## The order corresponds to the number
+my_levels <- list(
+  type...126 = levels(my_data_encoded$type...126),
+  C_T...125 = levels(my_data_encoded$C_T...125),
+  Cell_type...128 = levels(my_data_encoded$Cell_type...128)
+)
+
+my_levels
+
+```
+
+# Split the data sets to start the following analysis
+
+```{r Split the data}
+# Use 70% of the dataset as the training set and the remaining 30% as the testing set
+# Create a logical vector for sampling with replacement
+sample <- sample(c(TRUE, FALSE), nrow(my_data_train), replace = TRUE, prob = c(0.7, 0.3))
+
+# Create the training set
+train <- my_data_train[sample, ]
+train_lda <- train[, -124]
+
+# Create the testing set
+test <- my_data_train[!sample, ]
+
+# Create a logical vector for sampling without replacement for numeric data
+sample_numeric <- sample(c(TRUE, FALSE), nrow(train_data), replace = TRUE, prob = c(0.7, 0.3))
+
+# Create the numeric training set
+train_n <- train_data[sample, ]
+
+# Create the numeric testing set
+test_n <- train_data[!sample, ]
+
+```
+
+# Optimize RF
+
+```{r}
+set.seed(1235)
+model_tuned <- tuneRF(
+               x=my_data_train, #define predictor variables
+               y=my_data_train$Cell_type...128, #define response variable
+               ntreeTry=800,
+               mtryStart=4, 
+               stepFactor=1.5,
+               improve=0.01,
+               trace=FALSE, #don't show real-time progress
+               plot = TRUE,
+               importance = TRUE
+               )
+```
+
+```{r}
+# Fit the Random Forest model
+set.seed(1234)
+model_RF <- randomForest(Cell_type...128 ~ ., 
+                      data = train,
+                      ntree = 800,
+                      importance = TRUE,
+                      mtry = 9
+)
+
+# Create a copy of the data for predictions
+predicted_RF <- my_data_encoded
+
+# Make predictions on the test set
+test_RF <- predict(model_RF, newdata = test)
+
+# Fit another Random Forest model on the entire training dataset
+model_RF2 <- randomForest(Cell_type...128 ~ ., 
+                      data = my_data_train,
+                      ntree = 800,
+                      importance = TRUE,
+                      mtry = 9
+)
+
+# Make predictions on the new data
+Prediction_RF <- predict(model_RF2, newdata = predicted_RF)
+
+# View predictions
+predict_RF <- data.frame(Prediction_RF)
+predicted_RF$predicted_rf <- predict_RF$Prediction_RF
+
+# Display the predictions
+predicted_RF
+
+# Display fitted models
+print(model_RF)   # Using print for a more informative display
+print(model_RF2)
+
+```
+
+# First basic plots RF
+
+```{r, warning=FALSE}
+
+# Find RMSE of the best model
+# sqrt(model$mse[best_trees])  # Uncomment if you need to print the RMSE, works only on fully numbers
+
+# Plot the test MSE by the number of trees
+plot(model_RF2, main = "Test MSE by Number of Trees", type = "l", pch = 16)
+
+# Produce a variable importance plot
+varImpPlot(model_RF2, main = "Variable Importance Plot", col = "darkgreen")
+
+# Partial dependence plots illustrate the relationship between a specific feature and the predicted outcome while holding other features constant.
+# They are useful for understanding the effect of individual features on the model predictions.
+partialPlot(model_RF2, train, PC3, col = "darkgreen", )
+
+# Evaluate accuracy
+# correct_predictions <- sum(test_RF == test$Cell_type...128)
+# accuracy <- correct_predictions / nrow(test)
+
+# Create a confusion matrix
+conf_matrix <- table(test_RF, test_n$Cell_type...128)
+conf_matrix
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Print accuracy
+print(paste("Accuracy:", accuracy * 100, "%"))
+
+```
+
+
+#  Linear Discriminant Analysis
+  A method you can use when you have a set of predictor variables and you’d like to classify a response variable into two or more classes.
+
+```{r}
+
+# Prepare data for LDA prediction
+predict_LDA <- my_data_encoded
+
+# Make this example reproducible
+set.seed(1234)
+
+# Fit LDA model
+lda_model <- lda(Cell_type...128 ~ ., 
+                 data = train_lda)
+
+# Remove the 124th column as it is not informative
+my_data_LDA <- my_data_train[,-124]
+lda_model2 <- lda(Cell_type...128 ~ ., 
+                  data = my_data_LDA)
+
+# View model output
+## Prior probabilities of group: Represent proportions of each Species in the training set.
+## Group means: Display mean values for each predictor variable for each label.
+## Coefficients of linear discriminant: Display linear combination of predictor variables used to form the decision rule of the LDA model.
+plot(lda_model2)
+
+# Extract LDA scores
+lda_scores <- as.data.frame(predict(lda_model2)$x)
+
+# Use LDA model to make predictions on the test data
+## Returns a list with three variables: class, posterior probability, and linear discriminants
+predicted_LDA <- predict(lda_model2, predict_LDA)
+
+# Create a dataframe with the results
+predicted_LDA <- data.frame(predicted_LDA)
+# Insert results into the dataframe to compare
+predict_LDA$predicted_LDA <- predicted_LDA$class
+
+# Predict using the LDA model on the test set
+predict_LDA_train <- predict(lda_model, test)
+
+
+
+```
+
+# LDA Visulization
+
+```{r warning=FALSE}
+
+# View predicted class for the first six observations in the test set
+head(predict_LDA_train$class)
+
+# View posterior probabilities for the first six observations in the test set
+head(predict_LDA_train$posterior)
+
+# View linear discriminants for the first six observations in the test set
+head(predict_LDA_train$x)
+
+# Create a confusion matrix
+conf_matrix <- table(predict_LDA_train$class, test_n$Cell_type...128)
+conf_matrix
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Print accuracy
+cat("Accuracy:", accuracy, "\n")
+
+
+```
+
+
+```{r}
+# Define data to plot
+lda_plot <- cbind(my_data_LDA, predict(lda_model2)$x)
+
+# Create ggplot2 2D scatter plot
+ggplot(lda_plot, aes(LD1, LD2, color = Cell_type...128)) +
+  geom_point() +
+  ggtitle("LDA 2D Scatter Plot")
+
+# Create plotly 2D scatter plot
+plot_ly(lda_plot, x = ~LD1, y = ~LD2, color = ~Cell_type...128, type = "scatter", mode = "markers") %>%
+  layout(title = "LDA 2D Scatter Plot")
+
+# Create plotly 3D scatter plot
+plot_ly(lda_plot, x = ~LD1, y = ~LD2, z = ~LD3, color = ~Cell_type...128, 
+        type = "scatter3d", mode = "markers") %>%
+  layout(scene = list(aspectmode = "cube")) %>%
+  layout(title = "LDA 3D Scatter Plot")
+
+```
+ 
+ 
+# Lasso Regression
+  Lasso regression is a method we can use to fit a regression model when multicollinearity is present in the data.
+
+```{r}
+
+library(glmnet)
+
+# Create a matrix of predictors
+X <- as.matrix(train_data[, -which(names(train_data) == "Cell_type...128")])
+
+# Convert the response variable to a numeric vector
+y <- as.numeric(train_data$Cell_type...128)
+
+# Perform k-fold cross-validation to find the optimal lambda value
+cv_model <- cv.glmnet(X, y, alpha = 1)
+
+# Print the cross-validated results
+print(cv_model)
+
+# Find the optimal lambda value that minimizes test MSE
+best_lambda <- cv_model$lambda.min
+best_lambda
+
+# Produce a plot of test MSE by lambda value
+plot(cv_model)
+ 
+```
+
+
+
+```{r}
+# Find coefficients of the best model
+best_model <- glmnet(X, y, alpha = 1, lambda = best_lambda)
+
+# Create a copy of the encoded data
+predicted_LASSO <- as.matrix(encoded[, -which(names(encoded) == "Cell_type...128")])
+
+#x_test <- as.matrix(test_n[, -which(names(train_n) == "Cell_type...128")])
+
+# Use lasso regression model to predict the response value
+matrix_predict <- data.frame(round(predict(best_model, s = best_lambda, newx = predicted_LASSO)))
+
+# Add predicted values to the encoded_LS data frame
+predicted_LASSO<- data.frame(predicted_LASSO)
+predicted_LASSO$Cell_type...128 <- encoded$Cell_type...128
+predicted_LASSO$Predict_LASSO <- matrix_predict$s1
+predicted_LASSO
+
+```
+
+# Multiclass SVM
+
+```{r}
+# Train the SVM model
+svmfit <- svm(train_n, 
+                 train_n$Cell_type...128, 
+                 kernel = "radial")
+
+# Print the summary of the model
+print(svmfit)
+
+# Extract predictors from the prediction data
+x_predict <- encoded
+
+# Make predictions
+predictions <- round(predict(svm_model, x_predict))
+
+preditions_train <- round(predict(svm_model, test_n))
+
+# Create a confusion matrix
+conf_matrix <- table(preditions_train, test_n$Cell_type...128)
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Print accuracy
+cat("Accuracy:", accuracy, "\n")
+
+# Add the predictions to the prediction data frame
+x_predict$predicted_class <- predictions
+
+# View the updated prediction data frame
+#print(x_predict)
+```
+
+# XGBoost
+
+```{r}
+
+library(xgboost)
+
+# Step 1: Prepare the data
+# Ensure that the last column in 'train_n' is the variable you want to predict
+# For XGBoost, the response variable should be a factor for classification problems
+# Extract predictor variables and response variable
+X_train <- as.matrix(train_n[, -which(names(train_n) == "Cell_type...128")])  # Exclude the response variable
+y_train <- as.matrix(train_n$Cell_type...128) -1   # Response variable
+
+# Step 2: Train the XGBoost model
+xgb_model <- xgboost(data = as.matrix(X_train), 
+                     label = as.matrix(y_train), 
+                     objective = "multi:softmax", 
+                     num_class = 4,
+                     nrounds =500)
+
+# Step 3: Make predictions on the new data
+X_predict <- test_n[, -ncol(test_n)]  # Exclude the response variable
+
+# Predict the class labels 
+predictions_xgb <- data.frame(predict(xgb_model, as.matrix(X_predict)) +1)
+
+predictions_xgb$predicted_xgb<- predictions_xgb$predict.xgb_model..as.matrix.X_predict.....1
+
+predictions_xgb$predict.xgb_model..as.matrix.X_predict.....1<-NULL
+
+
+# If you want the class probabilities instead of class labels, use:
+# predictions <- predict(xgb_model, as.matrix(X_predict), type = "prob")
+
+print(xgb_model)
+summary(xgb_model)
+
+# Add the predictions to your prediction data frame
+#my_data_predict$predicted_class <- predictions
+
+# View the predicted results
+#print(my_data_predict$predicted_class)
+
+```
+
+
+
+```{r}
+# Assuming 'predictions_xgb' is a data frame or a tibble containing the predictions
+# and 'test_n' is your test data
+
+# Create a confusion matrix
+conf_matrix <- table(predictions_xgb$predicted_xgb, test_n$Cell_type...128)
+
+# Calculate metrics
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print the metrics
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+
+```
+
+# Predict with the XGB model on the full training set
+
+```{r}
+
+# Create a matrix of predictors
+X <- as.matrix(train_data[, -which(names(train_data) == "Cell_type...128")])
+
+# Convert the response variable to a numeric vector
+y <- as.numeric(train_data$Cell_type...128)
+
+Y_minusuno = as.matrix(train_data$Cell_type...128) -1
+
+xgb_model2 <- xgboost(data = as.matrix(X), 
+                     label = as.matrix(Y_minusuno), 
+                     objective = "multi:softmax", 
+                     num_class = 4,
+                     nrounds =800)
+print(xgb_model2)
+summary(xgb_model2)
+
+#  Make predictions on the new data
+xgb_predict <- encoded[, -ncol(encoded)]  # Exclude the response variable
+
+# Predict the class labels 
+xgb_predictions <- data.frame(predict(xgb_model2, as.matrix(xgb_predict)) +1)
+
+xgb_predictions$predicted_xgb<- xgb_predictions$predict.xgb_model2..as.matrix.xgb_predict.....1
+
+xgb_predictions$predict.xgb_model2..as.matrix.xgb_predict.....1<-NULL
+
+xgb_predict$Cell_type...128 <- encoded$Cell_type...128
+xgb_predict$predicted_xgb<-xgb_predictions$predicted_xgb
+
+
+
+
+```
+
+
