@@ -66,7 +66,7 @@ df_Tumor <- subset(my_data, C_T...125 == "Tumor")
 columns_to_encode <- c("type...126", "C_T...125", "Cell_type...128")
 columns_to_encode2 <- c("type...126", "C_T...125")
 
-# Create a new data frame without rows where 'Cell_type...128' has value "Unkown"
+# Create a new data frame without rows where 'Cell_type...128' has value "Unknown"
 my_data_train <- subset(my_data, Cell_type...128 != "Unkown")
 
 # Convert specified columns to factor type
@@ -78,8 +78,6 @@ levels(my_data_train$Cell_type...128)
 # Convert specified columns to factor type for the entire dataset
 my_data_encoded <- my_data %>% mutate_at(columns_to_encode, as.factor)
 
-# Keep a copy for safety and ease of use
-my_data_encoded_pure <- my_data_encoded
 
 # Do the number coating as numbers
 encoded <- my_data_encoded %>% mutate_at(columns_to_encode, as.numeric)
@@ -139,7 +137,7 @@ model_tuned <- tuneRF(
                )
 ```
 
-```{r}
+```{r Fit the Random Forest model}
 # Fit the Random Forest model
 set.seed(1234)
 model_RF <- randomForest(Cell_type...128 ~ ., 
@@ -169,6 +167,8 @@ Prediction_RF <- predict(model_RF2, newdata = predicted_RF)
 # View predictions
 predict_RF <- data.frame(Prediction_RF)
 predicted_RF$predicted_rf <- predict_RF$Prediction_RF
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(predicted_RF, "Predict_rf.csv", row.names = TRUE)
 
 # Display the predictions
 predicted_RF
@@ -204,11 +204,27 @@ partialPlot(model_RF2, train, PC3, col = "darkgreen", )
 conf_matrix <- table(test_RF, test_n$Cell_type...128)
 conf_matrix
 
-# Calculate accuracy
+# Calculate metrics
 accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
 
-# Print accuracy
-print(paste("Accuracy:", accuracy * 100, "%"))
+# Print the metrics
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+
+# Create a bar plot for precision, recall, and F1 score
+metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+# Create a bar plot for precision, recall, and F1 score using plotly
+plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
+  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
 
 ```
 
@@ -250,6 +266,8 @@ predicted_LDA <- predict(lda_model2, predict_LDA)
 predicted_LDA <- data.frame(predicted_LDA)
 # Insert results into the dataframe to compare
 predict_LDA$predicted_LDA <- predicted_LDA$class
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(predict_LDA, "Predict_lda.csv", row.names = TRUE)
 
 # Predict using the LDA model on the test set
 predict_LDA_train <- predict(lda_model, test)
@@ -275,11 +293,27 @@ head(predict_LDA_train$x)
 conf_matrix <- table(predict_LDA_train$class, test_n$Cell_type...128)
 conf_matrix
 
-# Calculate accuracy
+# Calculate metrics
 accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
 
-# Print accuracy
+# Print the metrics
 cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+
+# Create a bar plot for precision, recall, and F1 score
+metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+# Create a bar plot for precision, recall, and F1 score using plotly
+plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
+  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
 
 
 ```
@@ -317,6 +351,7 @@ library(glmnet)
 # Create a matrix of predictors
 X <- as.matrix(train_data[, -which(names(train_data) == "Cell_type...128")])
 
+
 # Convert the response variable to a numeric vector
 y <- as.numeric(train_data$Cell_type...128)
 
@@ -340,6 +375,10 @@ plot(cv_model)
 ```{r}
 # Find coefficients of the best model
 best_model <- glmnet(X, y, alpha = 1, lambda = best_lambda)
+best_model1 <- glmnet(as.matrix(train_n[, -which(names(train_n) == "Cell_type...128")]), 
+                      as.numeric(train_n$Cell_type...128), 
+                      alpha = 1, 
+                      lambda = best_lambda)
 
 # Create a copy of the encoded data
 predicted_LASSO <- as.matrix(encoded[, -which(names(encoded) == "Cell_type...128")])
@@ -347,13 +386,42 @@ predicted_LASSO <- as.matrix(encoded[, -which(names(encoded) == "Cell_type...128
 #x_test <- as.matrix(test_n[, -which(names(train_n) == "Cell_type...128")])
 
 # Use lasso regression model to predict the response value
+matrix_predict1<- round(predict(best_model1, s = best_lambda, newx = as.matrix(test_n[, -which(names(test_n) == "Cell_type...128")])))
 matrix_predict <- data.frame(round(predict(best_model, s = best_lambda, newx = predicted_LASSO)))
+
+# Create a confusion matrix
+conf_matrix <- table(matrix_predict1, test_n$Cell_type...128)
+conf_matrix
+
+# Calculate metrics
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print the metrics
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
 
 # Add predicted values to the encoded_LS data frame
 predicted_LASSO<- data.frame(predicted_LASSO)
 predicted_LASSO$Cell_type...128 <- encoded$Cell_type...128
 predicted_LASSO$Predict_LASSO <- matrix_predict$s1
 predicted_LASSO
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(predicted_LASSO, "Predict_lasso.csv", row.names = TRUE)
+
+# Create a bar plot for precision, recall, and F1 score
+metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+# Create a bar plot for precision, recall, and F1 score using plotly
+plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
+  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
 
 ```
 
@@ -378,9 +446,21 @@ preditions_train <- round(predict(svm_model, test_n))
 
 # Create a confusion matrix
 conf_matrix <- table(preditions_train, test_n$Cell_type...128)
-
+conf_matrix
 # Calculate accuracy
 accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Calculate metrics
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print the metrics
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
 
 # Print accuracy
 cat("Accuracy:", accuracy, "\n")
@@ -440,8 +520,8 @@ summary(xgb_model)
 
 
 ```{r}
-# Assuming 'predictions_xgb' is a data frame or a tibble containing the predictions
-# and 'test_n' is your test data
+#'predictions_xgb' is a data frame or a tibble containing the predictions
+#'test_n' is your test data
 
 # Create a confusion matrix
 conf_matrix <- table(predictions_xgb$predicted_xgb, test_n$Cell_type...128)
@@ -457,6 +537,16 @@ cat("Accuracy:", accuracy, "\n")
 cat("Precision:", mean(precision, na.rm = TRUE), "\n")
 cat("Recall:", mean(recall, na.rm = TRUE), "\n")
 cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+
+# Create a bar plot for precision, recall, and F1 score
+metrics_df_xgb <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+# Create a bar plot for precision, recall, and F1 score using plotly
+plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
+  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
 
 ```
 
@@ -493,9 +583,66 @@ xgb_predictions$predict.xgb_model2..as.matrix.xgb_predict.....1<-NULL
 xgb_predict$Cell_type...128 <- encoded$Cell_type...128
 xgb_predict$predicted_xgb<-xgb_predictions$predicted_xgb
 
-
-
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(xgb_predict, "Predict_xgb.csv", row.names = TRUE)
 
 ```
 
+# Naive Bayes Model
+
+```{r Naive Bayes Model, warning=FALSE}
+# Step 1: Prepare Data
+features_train <- train[, -ncol(train)]
+labels_train <- train[, ncol(train)]
+
+features_predict <- test[, -ncol(test)]
+
+Predict_nb <- my_data_encoded[, -ncol(my_data_encoded)]
+
+# Step 2: Train Naive Bayes Model with Tuned Parameter
+nb_model <- naiveBayes(features_train, labels_train, laplace = 0.001)
+
+nb_model2 <- naiveBayes(train_data[, -ncol(train_data)], train_data[, ncol(train_data)], laplace = 0.001)
+
+# Step 3: Make Predictions
+predictions_nb <- predict(nb_model, features_predict)
+predictions_nb2 <- data.frame(predict(nb_model, Predict_nb))
+
+predictions_nb2$predicted_nb <- predictions_nb2$predict.nb_model..Predict_nb.
+predictions_nb2$predict.nb_model..Predict_nb. <- NULL
+Predict_nb$Cell_type...128 <- my_data_encoded$Cell_type...128
+Predict_nb$predicted_nb <- predictions_nb2$predicted_nb
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(Predict_nb, "Predict_nb.csv", row.names = TRUE)
+```
+
+
+```{r Naive Bayes Model}
+# Create a confusion matrix
+conf_matrix <- table(predictions_nb, test_n$Cell_type...128)
+conf_matrix
+# Calculate metrics
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print the metrics
+cat("Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+# Create a bar plot for precision, recall, and F1 score
+metrics_df_nb <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+metrics_df_nb
+# Create a bar plot for precision, recall, and F1 score using plotly
+plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
+  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
+#nb_model
+
+```
 
