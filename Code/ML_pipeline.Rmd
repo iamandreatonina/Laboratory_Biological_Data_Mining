@@ -7,9 +7,7 @@ output: html_document
 # Preparatory steps
   Loading packages
   Store package names in a vectors for ease of access and to load them easily 
-```{r, message=FALSE, warning=FALSE}
-# Set the root directory for knitr
-knitr::opts_knit$set(root.dir = "D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+```{r Setup, message=FALSE, warning=FALSE}
 
 # Define a list of packages to be loaded
 PACKAGES <- c(
@@ -27,9 +25,13 @@ PACKAGES <- c(
   "dplyr",           # To manage data frames more efficiently
   "kernlab",         # Kernel-based machine learning methods
   "readr",           # For reading and parsing data
-  "e1071",           # For SVM modeling
+  "e1071",           # For SVM modeling and much MORE!
   "class",           # Various classification methods
-  "MASS"             # Modern Applied Statistics with S
+  "MASS",            # Modern Applied Statistics with S
+  "glmnet",          # For the LASSO regression 
+  "class",           # For the KNN method
+  "xgboost"          # For the XGBoost (Extreme Gradient Boosting) method
+  
 )
 
 # Load the specified packages
@@ -40,7 +42,7 @@ invisible(lapply(PACKAGES, library, character.only = TRUE))
 
 ## Managing the data to use
 
-```{r,warning=FALSE}
+```{r Data to use, warning=FALSE}
 # Load the data
 setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
 ML_data <- data.frame(read_csv("ML_data.csv", col_names = TRUE))
@@ -54,12 +56,12 @@ my_data <- subset(ML_data, select = -c(...1,risk...127))
 #my_data$risk...127 <- NULL
 
 # Subset data frame by condition
-df_Tumor <- subset(my_data, C_T...125 == "Tumor")
+#df_Tumor <- subset(my_data, C_T...125 == "Tumor")
 ```
 
-## NUMBER COATING
+## Number coating
 
-```{r First dumb try }
+```{r Current otimal way  }
 # Getting ready to do predictions
 # Number coating the values
 ## Specify the columns to be label encoded
@@ -91,14 +93,38 @@ my_levels <- list(
   Cell_type...128 = levels(my_data_encoded$Cell_type...128)
 )
 
-my_levels
+
 
 ```
 
 # Split the data sets to start the following analysis
 
 ```{r Split the data}
-# Use 70% of the dataset as the training set and the remaining 30% as the testing set
+
+# Set the seed for reproducibility
+#set.seed(1234)
+
+# Create an index for splitting the data
+index <- createDataPartition(my_data_train$Cell_type...128, p = 0.7, list = FALSE)
+
+# Create the training set
+train <- my_data_train[index, ]
+train_lda <- train[, -124]
+
+# Create the testing set
+test <- my_data_train[-index, ]
+
+# Create an index for splitting the data
+index_numeric <- createDataPartition(train_data$Cell_type...128, p = 0.7, list = FALSE)
+
+# Create the numeric training set
+train_n <- train_data[index_numeric, ]
+
+# Create the numeric testing set
+test_n <- train_data[-index_numeric, ]
+
+
+"# Use 70% of the dataset as the training set and the remaining 30% as the testing set
 # Create a logical vector for sampling with replacement
 sample <- sample(c(TRUE, FALSE), nrow(my_data_train), replace = TRUE, prob = c(0.7, 0.3))
 
@@ -116,26 +142,40 @@ sample_numeric <- sample(c(TRUE, FALSE), nrow(train_data), replace = TRUE, prob 
 train_n <- train_data[sample, ]
 
 # Create the numeric testing set
-test_n <- train_data[!sample, ]
+test_n <- train_data[!sample, ]"
 
 ```
 
-# Optimize RF
+# Random Forest:
 
-```{r}
+  -Type: Supervised Learning (Classification or Regression)
+  
+  -Description: Random Forest is an ensemble learning method that constructs a multitude of decision trees during training and outputs the mode of         the classes (classification) or the mean prediction (regression) of the individual trees. It is known for its robustness and ability to handle       complex data.
+  -Working:
+    Random Forest builds multiple decision trees during training, each based on a random subset of the features and a random subset of the training      data.
+    Each tree "votes" on the class for a given input, and the mode (classification) or average (regression) of these votes becomes the final             prediction.
+    This ensemble approach often leads to improved generalization and robustness compared to individual decision trees.
+
+```{r Optimise the RF}
+# Set seed for reproducibility
 set.seed(1235)
+
+# Tune the Random Forest model
 model_tuned <- tuneRF(
-               x=my_data_train, #define predictor variables
-               y=my_data_train$Cell_type...128, #define response variable
-               ntreeTry=800,
-               mtryStart=4, 
-               stepFactor=1.5,
-               improve=0.01,
-               trace=FALSE, #don't show real-time progress
-               plot = TRUE,
-               importance = TRUE
+               x = my_data_train,                   # Define predictor variables
+               y = my_data_train$Cell_type...128,  # Define response variable
+               ntreeTry = 800,                      # Number of trees to try
+               mtryStart = 4,                       # Starting value for mtry (number of variables randomly sampled as candidates at each split)
+               stepFactor = 1.5,                    # Factor by which mtry is multiplied in each iteration
+               improve = 0.01,                      # Minimum improvement in node impurity for a split to occur
+               trace = FALSE,                       # Don't show real-time progress
+               plot = TRUE,                         # Plot error rates during tuning
+               importance = TRUE                   # Calculate variable importance
                )
+
 ```
+
+# Fit the Random Forest model
 
 ```{r Fit the Random Forest model}
 # Fit the Random Forest model
@@ -179,9 +219,9 @@ print(model_RF2)
 
 ```
 
-# First basic plots RF
+# First basic plots for RF
 
-```{r, warning=FALSE}
+```{r Plots and metrics for RF, warning=FALSE}
 
 # Find RMSE of the best model
 # sqrt(model$mse[best_trees])  # Uncomment if you need to print the RMSE, works only on fully numbers
@@ -201,10 +241,61 @@ partialPlot(model_RF2, train, PC3, col = "darkgreen", )
 # accuracy <- correct_predictions / nrow(test)
 
 # Create a confusion matrix
-conf_matrix <- table(test_RF, test_n$Cell_type...128)
-conf_matrix
+conf_matrix <- table(test_RF, test$Cell_type...128)
+#conf_matrix
+
+cm <- confusionMatrix(test_RF, test$Cell_type...128)
+cm
 
 # Calculate metrics
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+precision <- diag(conf_matrix) / rowSums(conf_matrix)
+recall <- diag(conf_matrix) / colSums(conf_matrix)
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print the metrics
+cat("\n","Accuracy:", accuracy, "\n")
+cat("Precision:", mean(precision, na.rm = TRUE), "\n")
+cat("Recall:", mean(recall, na.rm = TRUE), "\n")
+cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
+
+# Create a bar plot for precision, recall, and F1 score
+metrics_df_RF <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+                         Value = c(mean(precision, na.rm = TRUE),
+                                   mean(recall, na.rm = TRUE),
+                                   mean(f1_score, na.rm = TRUE)))
+
+metrics_df_RF
+
+```
+
+## K-Nearest Neighbors (KNN) Model:
+
+  -Type: Supervised Learning (Classification or Regression)
+  -Description: KNN is a simple algorithm that classifies a new data point based on the majority class of its k-nearest neighbors in the feature         space. It is a non-parametric, instance-based learning algorithm.
+  
+  -Working:
+    KNN classifies a data point based on the class labels of its k-nearest neighbors in the feature space.
+    The distance metric (usually Euclidean distance) is used to measure the proximity between data points.
+    The algorithm then assigns the majority class among the k-nearest neighbors to the new data point.
+
+```{r K-Nearest Neighbors with class library training}
+# Separate features and labels
+train_features <- train_n[, -ncol(train)]  # All columns except the last one
+train_labels <- train_n$Cell_type...128    # The last column
+
+# Fit the KNN model
+k_value <- 4  # You can choose the value of k
+knn_model <- knn(train_features, test_n[, -which(names(test_n) == "Cell_type...128")], train_labels, k = k_value)
+```
+
+
+```{r Plots and metrix for K-Nearest Neighbors}
+# Confusion Matrix
+conf_matrix <- table(Actual = test_n$Cell_type...128, Predicted = knn_model)
+conf_matrix
+
+# Calculate metrics from the confusion matrix
 accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
 precision <- diag(conf_matrix) / rowSums(conf_matrix)
 recall <- diag(conf_matrix) / colSums(conf_matrix)
@@ -216,23 +307,50 @@ cat("Precision:", mean(precision, na.rm = TRUE), "\n")
 cat("Recall:", mean(recall, na.rm = TRUE), "\n")
 cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
 
-# Create a bar plot for precision, recall, and F1 score
-metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+# Create a data frame for precision, recall, and F1 score
+metrics_df_KNN <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
                          Value = c(mean(precision, na.rm = TRUE),
                                    mean(recall, na.rm = TRUE),
                                    mean(f1_score, na.rm = TRUE)))
+metrics_df_KNN
 
-# Create a bar plot for precision, recall, and F1 score using plotly
-plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
-  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
 
 ```
 
+```{r K-Nearest Neighbors prediction}
+# Separate features and labels
+train_features <- train_data[, -ncol(train_data)]  # All columns except the last one
+train_labels <- train_data$Cell_type...128    # The last column
 
-#  Linear Discriminant Analysis
-  A method you can use when you have a set of predictor variables and you’d like to classify a response variable into two or more classes.
+# Fit the KNN model
+k_value <- 4  # You can choose the value of k
+knn_model <- knn(train_features, encoded[, -which(names(encoded) == "Cell_type...128")], train_labels, k = k_value)
 
-```{r}
+# Create a data frame with KNN predictions
+predictions_knn <- data.frame(as.numeric(knn_model))
+
+# Rename the columns for clarity
+predictions_knn$knn_model <- predictions_knn$as.numeric.knn_model.
+predictions_knn$as.numeric.knn_model. <- NULL
+
+# Combine the KNN predictions with the original encoded data
+predicted_KNN <- encoded
+predicted_KNN$predicted_Knn <- predictions_knn
+
+#Write the results
+setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
+write.csv(predicted_KNN, "Predict_Knn.csv", row.names = TRUE)
+```
+
+
+#Linear Discriminant Analysis (LDA):
+
+  -Type: Supervised Learning (classification)
+  -Description: LDA is a classification and dimensionality reduction technique that seeks to find the linear combinations of features that best          separate different classes in the data.
+  
+  -Working: It calculates the means and variances of each class and then finds a linear combination of features that maximizes the ratio of the          between-class variance to the within-class variance. This linear combination is then used for classification.
+
+```{r Linear Discriminant Analysis (LDA) appllication}
 
 # Prepare data for LDA prediction
 predict_LDA <- my_data_encoded
@@ -278,7 +396,7 @@ predict_LDA_train <- predict(lda_model, test)
 
 # LDA Visulization
 
-```{r warning=FALSE}
+```{r Plots and metrics for LDA,warning=FALSE}
 
 # View predicted class for the first six observations in the test set
 head(predict_LDA_train$class)
@@ -293,6 +411,7 @@ head(predict_LDA_train$x)
 conf_matrix <- table(predict_LDA_train$class, test_n$Cell_type...128)
 conf_matrix
 
+
 # Calculate metrics
 accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
 precision <- diag(conf_matrix) / rowSums(conf_matrix)
@@ -305,21 +424,14 @@ cat("Precision:", mean(precision, na.rm = TRUE), "\n")
 cat("Recall:", mean(recall, na.rm = TRUE), "\n")
 cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
 
-# Create a bar plot for precision, recall, and F1 score
-metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+# Create a DF for precision, recall, and F1 score
+metrics_df_LDA <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
                          Value = c(mean(precision, na.rm = TRUE),
                                    mean(recall, na.rm = TRUE),
                                    mean(f1_score, na.rm = TRUE)))
-
-# Create a bar plot for precision, recall, and F1 score using plotly
-plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
-  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
+metrics_df_LDA
 
 
-```
-
-
-```{r}
 # Define data to plot
 lda_plot <- cbind(my_data_LDA, predict(lda_model2)$x)
 
@@ -341,12 +453,15 @@ plot_ly(lda_plot, x = ~LD1, y = ~LD2, z = ~LD3, color = ~Cell_type...128,
 ```
  
  
-# Lasso Regression
-  Lasso regression is a method we can use to fit a regression model when multicollinearity is present in the data.
+# LASSO (Least Absolute Shrinkage and Selection Operator):
 
-```{r}
+  -Type: Regularization technique for linear regression
+  -Description: LASSO is a regression technique that introduces a penalty term to the linear regression objective function, encouraging the model to     use fewer features by driving some of their coefficients to zero.
+  
+  -Working: The penalty term is the absolute sum of the coefficients. It helps prevent overfitting and promotes sparsity in the model, making it         useful for feature selection.
 
-library(glmnet)
+```{r Find the optimal lambda}
+
 
 # Create a matrix of predictors
 X <- as.matrix(train_data[, -which(names(train_data) == "Cell_type...128")])
@@ -370,9 +485,7 @@ plot(cv_model)
  
 ```
 
-
-
-```{r}
+```{r LASSO appllication }
 # Find coefficients of the best model
 best_model <- glmnet(X, y, alpha = 1, lambda = best_lambda)
 best_model1 <- glmnet(as.matrix(train_n[, -which(names(train_n) == "Cell_type...128")]), 
@@ -413,19 +526,15 @@ predicted_LASSO
 setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)/0_PROJECT/Datasets_finals")
 write.csv(predicted_LASSO, "Predict_lasso.csv", row.names = TRUE)
 
-# Create a bar plot for precision, recall, and F1 score
-metrics_df <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
+# Create a DF for precision, recall, and F1 score
+metrics_df_LASSO <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
                          Value = c(mean(precision, na.rm = TRUE),
                                    mean(recall, na.rm = TRUE),
                                    mean(f1_score, na.rm = TRUE)))
-
-# Create a bar plot for precision, recall, and F1 score using plotly
-plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
-  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
-
+metrics_df_LASSO
 ```
 
-# Multiclass SVM
+# Multiclass SVM [Doesnt work well :(... ]
 
 ```{r}
 # Train the SVM model
@@ -472,10 +581,13 @@ x_predict$predicted_class <- predictions
 #print(x_predict)
 ```
 
-# XGBoost
+# XGBoost (Extreme Gradient Boosting):
 
-```{r}
+  -Type: Ensemble Learning (boosting method)
+  -Description: XGBoost is a powerful and efficient implementation of gradient boosting. It sequentially adds weak learners (usually decision trees)     to the model, each correcting errors of the previous one.
+  -Working: It optimizes a loss function and includes regularization terms to avoid overfitting. The final prediction is a weighted sum of the           predictions from all the weak learners.
 
+```{r XGBoost (Extreme Gradient Boosting)}
 library(xgboost)
 
 # Step 1: Prepare the data
@@ -502,27 +614,11 @@ predictions_xgb$predicted_xgb<- predictions_xgb$predict.xgb_model..as.matrix.X_p
 
 predictions_xgb$predict.xgb_model..as.matrix.X_predict.....1<-NULL
 
-
-# If you want the class probabilities instead of class labels, use:
-# predictions <- predict(xgb_model, as.matrix(X_predict), type = "prob")
-
-print(xgb_model)
+#print(xgb_model)
 summary(xgb_model)
-
-# Add the predictions to your prediction data frame
-#my_data_predict$predicted_class <- predictions
-
-# View the predicted results
-#print(my_data_predict$predicted_class)
-
 ```
 
-
-
-```{r}
-#'predictions_xgb' is a data frame or a tibble containing the predictions
-#'test_n' is your test data
-
+```{r Plots and metrix for the XGBoost (Extreme Gradient Boosting)}
 # Create a confusion matrix
 conf_matrix <- table(predictions_xgb$predicted_xgb, test_n$Cell_type...128)
 
@@ -544,15 +640,10 @@ metrics_df_xgb <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
                                    mean(recall, na.rm = TRUE),
                                    mean(f1_score, na.rm = TRUE)))
 
-# Create a bar plot for precision, recall, and F1 score using plotly
-plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
-  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
-
+metrics_df_xgb
 ```
 
-# Predict with the XGB model on the full training set
-
-```{r}
+```{r XGB model on the full training set to predict}
 
 # Create a matrix of predictors
 X <- as.matrix(train_data[, -which(names(train_data) == "Cell_type...128")])
@@ -588,7 +679,11 @@ write.csv(xgb_predict, "Predict_xgb.csv", row.names = TRUE)
 
 ```
 
-# Naive Bayes Model
+# Naive Bayes:
+
+  -Type: Supervised Learning (classification)
+  -Description: Naive Bayes is a probabilistic classifier based on Bayes' theorem. It assumes that the features are conditionally independent given      the class label, which is a strong and often unrealistic assumption.
+  -Working: It calculates the probability of each class given a set of features and selects the class with the highest probability as the predicted      class. Naive Bayes is computationally efficient and works well in practice, especially for text classification.
 
 ```{r Naive Bayes Model, warning=FALSE}
 # Step 1: Prepare Data
@@ -616,8 +711,7 @@ setwd("D:/VarieTHOM/University/QCB/3_SEMESTRE/Data Mining/Laboratory (Blanzieri)
 write.csv(Predict_nb, "Predict_nb.csv", row.names = TRUE)
 ```
 
-
-```{r Naive Bayes Model}
+```{r Plots and metrics for Naive Bayes}
 # Create a confusion matrix
 conf_matrix <- table(predictions_nb, test_n$Cell_type...128)
 conf_matrix
@@ -632,17 +726,13 @@ cat("Accuracy:", accuracy, "\n")
 cat("Precision:", mean(precision, na.rm = TRUE), "\n")
 cat("Recall:", mean(recall, na.rm = TRUE), "\n")
 cat("F1 Score:", mean(f1_score, na.rm = TRUE), "\n")
-# Create a bar plot for precision, recall, and F1 score
+
+# Create a DF for precision, recall, and F1 score
 metrics_df_nb <- data.frame(Metric = c("Precision", "Recall", "F1 Score"),
                          Value = c(mean(precision, na.rm = TRUE),
                                    mean(recall, na.rm = TRUE),
                                    mean(f1_score, na.rm = TRUE)))
-
 metrics_df_nb
-# Create a bar plot for precision, recall, and F1 score using plotly
-plot_ly(metrics_df, x = ~Metric, y = ~Value, type = "bar", color = ~Metric) %>%
-  layout(title = "Metrics", xaxis = list(title = "Metric"), yaxis = list(title = "Value"))
-#nb_model
 
 ```
 
