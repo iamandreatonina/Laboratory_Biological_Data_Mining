@@ -1,0 +1,671 @@
+"","Cell_type","predicted_RF","predicted_KNN","predicted_NB","all_predictions_same"
+"X817_T","Control","Control","Control","Control",TRUE
+"X845_B","Control","Control","Control","Control",TRUE
+"X845_T","Control","Control","Control","Control",TRUE
+"X858_B","Control","Control","Control","Control",TRUE
+"X858_T","Control","Control","Control","Control",TRUE
+"X867_B","Control","Control","Control","Control",TRUE
+"X867_T","Control","Control","Control","Control",TRUE
+"X899_B","Control","Control","Control","Control",TRUE
+"X899_T","Control","Control","Control","Control",TRUE
+"X817_B","Control","Control","Control","Control",TRUE
+"TU0049_CD4_HC","Control","Control","Control","Control",TRUE
+"TU0049_CD8_HC","Control","Control","Control","Control",TRUE
+"TU0051_CD4_HC","Control","Control","Control","Control",TRUE
+"TU0051_CD8_HC","Control","Control","Control","Control",TRUE
+"TU0054_CD4_HC","Control","Control","Control","Control",TRUE
+"TU0054_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0130_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0130_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0133_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0133_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0108_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0108_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0115_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0115_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0127_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0127_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0131_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0131_CD8_HC","Control","Control","Control","Control",TRUE
+"XT0141_CD4_HC","Control","Control","Control","Control",TRUE
+"XT0141_CD8_HC","Control","Control","Control","Control",TRUE
+"ALL33","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL2","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL3","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL18","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL14","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL4","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL20","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL10","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL19","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL5","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL25","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL27","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL26","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL28","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL6","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL34","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL36","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL38","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL37","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL15","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL24","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL23","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL22","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL9","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL17","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL16","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL1","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL30","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL11","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL21","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL7","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL13","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL35","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL12","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL32","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL8","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL29","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL31","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"GSM5491718_16.001","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491719_16.002","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491720_16.003","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491721_16.006","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491722_16.008","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491723_16.011","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491724_16.012","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491725_16.014","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491726_16.015","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491727_16.017","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491728_16.021","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491729_16.022","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491730_16.025","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491731_16.027","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491732_16.029","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491733_16.033","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491734_16.035","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491735_16.037","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491736_16.038","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491737_16.039","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491738_16.042","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491739_16.044","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491740_16.047","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491741_16.048","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491742_16.049","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491743_16.050","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491744_16.052","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491745_16.053","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491746_16.056","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9836/3 - Pre-B ALL","9837/3 - Pre-T ALL",FALSE
+"GSM5491747_16.057","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491748_16.059","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491749_16.065","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491750_16.068","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491751_16.070","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491752_16.074","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491753_16.076","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491754_16.077","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491755_16.082","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491756_16.086","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491757_16.089","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491758_16.090","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491759_16.092","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491760_16.094","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491761_16.095","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491762_16.098","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491763_16.099","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491764_16.100","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491765_16.102","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491766_16.103","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491767_16.104","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491768_16.105","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491769_16.106","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491770_16.108","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491771_16.114","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491772_16.115","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491773_16.116","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491774_16.129","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491775_16.131","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491776_16.132","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491777_16.138","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491778_16.139","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491779_16.140","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491780_16.141","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491781_16.144","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491782_16.152","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491783_16.155","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491784_16.158","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491785_16.161","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491786_16.162","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491787_16.164","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491788_16.167","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491789_16.170","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491790_16.171","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491791_16.174","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491792_16.176","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491793_16.177","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491794_16.179","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491795_16.182","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491796_16.186","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491797_16.189","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491798_16.191","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"GSM5491799_16.192","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491800_16.194","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491801_16.196","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491802_16.199","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491803_16.200","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491804_16.201","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491805_16.202","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491806_16.204","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491807_16.205","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491808_16.207","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491809_16.210","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491810_16.215","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491811_16.217","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491812_16.218","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491813_16.220","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491814_16.221","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491815_16.222","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491816_16.223","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491817_16.225","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491818_16.226","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491819_16.227","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491820_16.229","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491821_16.230","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491822_16.231","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491823_16.232","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491824_16.233","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491825_16.238","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491826_16.239","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491827_16.240","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491828_16.241","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491829_16.242","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491830_16.243","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491831_16.244","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491832_16.245","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491833_16.249","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491834_16.252","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491835_16.253","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491836_16.256","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491837_16.257","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491838_16.258","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491839_16.261","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491840_16.265","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491841_16.266","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491842_16.267","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491843_16.268","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491844_16.269","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491845_16.270","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491846_16.272","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491847_16.273","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491848_16.279","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491849_16.280","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491850_16.282","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491851_16.284","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491852_16.286","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491853_16.287","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491854_16.291","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491855_16.293","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491856_16.294","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491857_16.295","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491858_16.296","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491859_16.302","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491860_16.304","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491861_16.306","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491862_16.312","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491863_16.315","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491864_16.319","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491865_16.322","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491866_16.326","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491867_16.328","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491868_16.335","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491869_16.338","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491870_16.339","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491871_16.340","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491872_16.341","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491873_16.342","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491874_16.343","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491875_16.346","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491876_16.347","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491877_16.348","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491878_16.350","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491879_16.352","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491880_16.354","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491881_16.359","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491882_16.362","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491883_16.363","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491884_16.364","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491885_16.367","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491886_16.372","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491887_16.373","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"GSM5491888_16.374","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491889_16.376","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"GSM5491890_16.378","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_380","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_464","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_363","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_365","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_444","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_368","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_358","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_172","Unkown","9837/3 - Pre-T ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_171","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_243","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_291","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_310","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_546","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_563","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_553","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_555","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_559","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_458","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_391","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_459","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_402","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_5","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_8","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_502","Unkown","T Cell","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL_486","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_537","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_495","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_542","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_205","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_210","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_257","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_244","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_467","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_472","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_466","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_484","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL_470","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_475","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_290","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_295","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_299","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_268","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_302","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_704","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_707","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_319","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_686","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_695","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_633","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL_702","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_166","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_176","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_612","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_619","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_624","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_626","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_622","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_627","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_629","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_631","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_656","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_634","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_740","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_669","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_4","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_644","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_49","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_678","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_679","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_422","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_372","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_300","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_367","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_314","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_376","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_442","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_682","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_683","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_750","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_713","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_735","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_680","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_681","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_738","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_734","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_689","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_688","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_693","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_745","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_747","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_539","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_621","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_618","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_620","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_536","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_392","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_431","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_390","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_528","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_504","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_460","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_646","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_665","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_613","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_489","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_468","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_493","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_532","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_395","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_557","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_373","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_381","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_435","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_609","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_606","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_602","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_313","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_321","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_317","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_221","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_206","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_202","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_106","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_462","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_544","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_254","Unkown","T Cell","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL_262","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_312","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_167","Unkown","9837/3 - Pre-T ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_174","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_465","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_485","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_474","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_11","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_28","Unkown","9837/3 - Pre-T ALL","T Cell","T Cell",FALSE
+"ALL_63","Unkown","T Cell","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL_29","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_324","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_378","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_412","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_410","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_420","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_403","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_160","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_113","Unkown","T Cell","9837/3 - Pre-T ALL","T Cell",FALSE
+"ALL_164","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_57","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_52","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_61","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_62","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_141","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_125","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_388","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL_386","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_389","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_529","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_157","Unkown","T Cell","9836/3 - Pre-B ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_200","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_58","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_246","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_284","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_351","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_236","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_247","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_215","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_248","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_595","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_598","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_584","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_567","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_456","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_371","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_488","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_477","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_482","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_514","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_513","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_219","Unkown","9837/3 - Pre-T ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_218","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_217","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_232","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_494","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_492","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_503","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_293","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_7","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_16","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_357","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_382","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_47","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_499","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_169","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"ALL_543","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_568","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_180","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_564","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_589","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_560","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_194","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_569","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_175","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_168","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_234","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_130","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_24","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_17","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_541","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_593","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_586","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_718","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_717","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_709","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_710","Unkown","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",TRUE
+"ALL_562","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_45","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_298","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_9","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_76","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_71","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_501","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_604","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_170","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_884","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_888","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_903","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_753","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_901","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_907","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_950","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_952","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_930","Unkown","9837/3 - Pre-T ALL","T Cell","T Cell",FALSE
+"ALL_931","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_926","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_953","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_913","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_920","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_941","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_942","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_944","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_962","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_964","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1003","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1006","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1000","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_984","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_986","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_988","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_967","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_975","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_976","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_978","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_1026","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1031","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_762","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1034","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1039","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1019","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_761","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1023","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1056","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1057","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1062","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1065","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1081","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1001","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1005","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_905","Unkown","9837/3 - Pre-T ALL","T Cell","T Cell",FALSE
+"ALL_985","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_989","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1086","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1089","Unkown","9837/3 - Pre-T ALL","T Cell","T Cell",FALSE
+"ALL_882","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1092","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1116","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1111","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1118","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1096","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1099","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1100","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1109","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_869","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_874","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_877","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_851","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_853","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1060","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1047","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1061","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1072","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1058","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1190","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1150","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1178","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_1187","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1154","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1162","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1163","Unkown","9837/3 - Pre-T ALL","T Cell","T Cell",FALSE
+"ALL_1127","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1128","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1131","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1135","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1139","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_1136","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_1159","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1110","Unkown","T Cell","9836/3 - Pre-B ALL","T Cell",FALSE
+"ALL_1097","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_878","Unkown","T Cell","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_784","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_808","Unkown","9836/3 - Pre-B ALL","T Cell","9836/3 - Pre-B ALL",FALSE
+"ALL_829","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_S1","Unkown","T Cell","9837/3 - Pre-T ALL","9837/3 - Pre-T ALL",FALSE
+"KSALL34","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"KSALL50","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_358_r","Unkown","T Cell","T Cell","T Cell",TRUE
+"ALL_210_r","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_257_r","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_464_r","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_380_r","Unkown","T Cell","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",FALSE
+"ALL_680_r","Unkown","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL","9836/3 - Pre-B ALL",TRUE
+"ALL_1026_r","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"ALL_368_r","Unkown","9836/3 - Pre-B ALL","T Cell","T Cell",FALSE
+"SIHTALLS26","T Cell","T Cell","T Cell","T Cell",TRUE
+"T78","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS3","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS12","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS12","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS14","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS10","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS28","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS10","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS6","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS19","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS5","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS24","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS9","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS16","T Cell","T Cell","T Cell","T Cell",TRUE
+"T70","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS35","T Cell","T Cell","T Cell","T Cell",TRUE
+"T92","T Cell","T Cell","T Cell","T Cell",TRUE
+"T115","T Cell","T Cell","T Cell","T Cell",TRUE
+"DMUTALLS1","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS1","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS14","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS36","T Cell","T Cell","T Cell","T Cell",TRUE
+"T84","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS6","T Cell","T Cell","T Cell","T Cell",TRUE
+"T105","T Cell","T Cell","T Cell","T Cell",TRUE
+"T103","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS3","T Cell","T Cell","T Cell","T Cell",TRUE
+"T39","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS31","T Cell","T Cell","T Cell","T Cell",TRUE
+"T83","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS29","T Cell","T Cell","T Cell","T Cell",TRUE
+"T112","T Cell","T Cell","T Cell","T Cell",TRUE
+"T74","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS17","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS25","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS2","T Cell","T Cell","T Cell","T Cell",TRUE
+"T59","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS11","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS10","T Cell","T Cell","T Cell","T Cell",TRUE
+"T89","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS8","T Cell","T Cell","T Cell","T Cell",TRUE
+"T60","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS7","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS12","T Cell","T Cell","T Cell","T Cell",TRUE
+"T62","T Cell","T Cell","T Cell","T Cell",TRUE
+"T85","T Cell","T Cell","T Cell","T Cell",TRUE
+"T106","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS20","T Cell","T Cell","T Cell","T Cell",TRUE
+"T114","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS6","T Cell","T Cell","T Cell","T Cell",TRUE
+"T119","T Cell","T Cell","T Cell","T Cell",TRUE
+"T67","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS11","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS15","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS27","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS4","T Cell","T Cell","T Cell","T Cell",TRUE
+"T97","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS22","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS1","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS2","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS7","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS7","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS23","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS33","T Cell","T Cell","T Cell","T Cell",TRUE
+"T104","T Cell","T Cell","T Cell","T Cell",TRUE
+"T93","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS5","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS1","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS18","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS8","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS32","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS2","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS14","T Cell","T Cell","T Cell","T Cell",TRUE
+"T79","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS9","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS15","T Cell","T Cell","T Cell","T Cell",TRUE
+"T95","T Cell","T Cell","T Cell","T Cell",TRUE
+"T80","T Cell","T Cell","T Cell","T Cell",TRUE
+"T82","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS4","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS8","T Cell","T Cell","T Cell","T Cell",TRUE
+"T77","T Cell","T Cell","T Cell","T Cell",TRUE
+"T90","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS13","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS13","T Cell","T Cell","T Cell","T Cell",TRUE
+"T91","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS13","T Cell","T Cell","T Cell","T Cell",TRUE
+"T116","T Cell","T Cell","T Cell","T Cell",TRUE
+"T99","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS11","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS30","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS9","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS4","T Cell","T Cell","T Cell","T Cell",TRUE
+"T68","T Cell","T Cell","T Cell","T Cell",TRUE
+"T61","T Cell","T Cell","T Cell","T Cell",TRUE
+"T102","T Cell","T Cell","T Cell","T Cell",TRUE
+"T88","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS21","T Cell","T Cell","T Cell","T Cell",TRUE
+"T94","T Cell","T Cell","T Cell","T Cell",TRUE
+"H301TALLS3","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS34","T Cell","T Cell","T Cell","T Cell",TRUE
+"SIHTALLS37","T Cell","T Cell","T Cell","T Cell",TRUE
+"CMUTALLS5","T Cell","T Cell","T Cell","T Cell",TRUE
+"T101","T Cell","T Cell","T Cell","T Cell",TRUE
+"DMUTALLS2","T Cell","T Cell","T Cell","T Cell",TRUE
+"T81","T Cell","T Cell","T Cell","T Cell",TRUE
+"T87","T Cell","T Cell","T Cell","T Cell",TRUE
