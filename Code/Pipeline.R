@@ -389,6 +389,7 @@ clust.vec<-cutree(hc2,k=8)
 fviz_cluster(list(data=data.PC.tumor$x, cluster=clust.vec))
 
 # clusters <- mutate(cpm_table_log[31:670],cluster =clust.vec
+library(RColorBrewer)
 
 clusterino_pam2<-as.data.frame((pam2$clustering))
 components<-data.PC.tumor[["x"]]
@@ -542,7 +543,7 @@ component5<- cbind(component5,clusterino_pam1)
 component5$PC2 <- -component5$PC2
 
 ### sistemare 
-fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1$type, symbols = c('circle','cross'), mode='markers')
+fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1$type, symbols = c('diamond','circle'), mode='markers',marker = list(size = 4))
 fig9
 
 write.csv(component5,file='ML_HS.csv',row.names = T)
@@ -568,17 +569,30 @@ component6<- cbind(component6,clusterino_pam1_nonHS)
 component6$PC2 <- -component6$PC2
 write.csv(component6,file='ML_nonHS.csv',row.names = T)
 
-##### sismtemare 
-fig9_nonHS<-plot_ly(component6, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1_nonHS$Cell_type,colors=c('darkred', 'blue4','green','orange'),  symbol = clusterino_pam1_nonHS$type, symbols = c('circle','square'), mode='markers')
+##### sistemare 
+fig9_nonHS<-plot_ly(component6, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1_nonHS$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1_nonHS$type, symbols = c('circle','square'), mode='markers',marker = list(size = 4))
 fig9_nonHS
 
 ##############
+
+####### Categories of HS genes found UP and Down between Tumor and Control
+## Above we defined Diff_expressed <- DEGs[which(DEGs$class != '='),]
+
+Categories_HS <- Human_genes %>% dplyr::filter(Human_genes$`Ensembl ID` %in% rownames(Diff_expressed ))
+table(Categories_HS$`General Mechanism of Origin`)
+barplot(table(Categories_HS$`General Mechanism of Origin`), horiz=T, names.arg=c("1","2","3","4","5","6","7","8","9"),col=brewer.pal(n = 9, name = "RdBu"))
+legend(x="topright", inset=.02,y.intersp = 1,title="Mechanism of origin", legend=c("de novo origin","amplification","loss","sequence alteration","structure alteration","undefined feature","lost in chimpanzee","new non-coding gene","regulatory region alteration"), fill=brewer.pal(n = 9, name = "RdBu"), cex=0.7)
+
+##########
 
 library(clusterProfiler)
 library(biomaRt)
 library(org.Hs.eg.db)
 
+
 ensmebl <- useMart(biomart = 'ensembl',dataset = 'hsapiens_gene_ensembl')
+
+############ non HS
 convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = rownames(DEGs), mart = ensmebl)
 
 DEGs_2 <- rownames_to_column(DEGs, var = 'ensembl_gene_id')
@@ -601,6 +615,10 @@ dotplot(ego_BP_UP, showCategory=15)
 
 heatplot(ego_BP_UP, showCategory = 5)
 
+eWP_BP_UP <- enrichWP(gene =Up_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05, qvalueCutoff = 0.1 )
+
+head(eWP_BP_UP,10)
+
 #Down
 ego_BP_DW <- enrichGO(gene = Down_DEGs_merge_convert$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.05, qvalueCutoff = 0.05)
 
@@ -609,6 +627,10 @@ barplot(ego_BP_DW, showCategory = 15)
 dotplot(ego_BP_DW, showCategory=15)
 
 heatplot(ego_BP_DW, showCategory = 5)
+
+eWP_BP_DW <- enrichWP(gene =Down_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05, qvalueCutoff = 0.1 )
+
+head(eWP_BP_DW,10)
 ################# HS
 
 convert_HS <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = rownames(DEGs_Hsgenes), mart = ensmebl)
@@ -631,6 +653,12 @@ barplot(ego_BP_UP_HS)
 
 dotplot(ego_BP_UP_HS, showCategory=15)
 
+# pathway annotation will be done after the gene expansion, due to lack of informations, to low numbers of terms
+# eWP_BP_UP_HS <- enrichWP(gene =Up_DEGs_merge_convert_HS$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 1, qvalueCutoff = 0.2)
+# 
+# head(eWP_BP_UP_HS,10)
+
+
 #Down
 ego_BP_DW_HS <- enrichGO(gene = Down_DEGs_merge_convert_HS$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.2, qvalueCutoff = 0.2)
 
@@ -640,5 +668,226 @@ dotplot(ego_BP_DW_HS)
 
 
 
-############ 
+############ ############# DEGs
+
+#### DEG subtype vs subtype without controls
+
+# creating a dataframe containing the info on the samples, this is needed to be able to perform the DGE
+
+# clusterino_pam2 contains in Cell type columns the info on the subtypes
+info_subtypes<-clusterino_pam2
+info_subtypes$sample<-rownames(info_subtypes)
+info_subtypes<-info_subtypes[info_subtypes$Cell_type!="Unkown",]
+tumors_subtype<-tumor_adjusted1[colnames(tumor_adjusted1) %in% rownames(info_subtypes)]
+
+
+# Now we can create the DGEList object
+# edge_c_total <- DGEList(counts = total_adjusted1, group=info_samples$condition, samples=info_samples, genes=total_adjusted1)
+# edge_n_total <- calcNormFactors(edge_c_total,method = 'TMM')
+
+#######
+edge_c_subtypes <- DGEList(counts = tumors_subtype, group=info_subtypes$Cell_type, samples=info_subtypes, genes=tumors_subtype)
+edge_n_subtypes <- calcNormFactors(edge_c_subtypes,method = 'TMM')
+# We create the cpm table
+cpm_table_subtypes <-as.data.frame(round(cpm(edge_n_subtypes),2)) # the library size is scaled by the normalization factor
+
+# Here we define the experimental design matrix, we build a model with no intercept also we have two varaibles, one for each condition 
+# 1 for control and 2 for tumor 
+design_subtype <- model.matrix(~0+group, data = edge_n_subtypes$samples, contrast.arg=list(group='contr.sum'))
+colnames(design_subtype) <- levels(edge_n_subtypes$samples$group)
+rownames(design_subtype) <- edge_n_subtypes$samples$sample
+#design_subtype[,'T cell']<-design_subtype[,'T cell']/2
+#design_subtype[,'9837/3 - Pre-T ALL']<-design_subtype[,'9837/3 - Pre-T ALL']/2
+colnames(design_subtype)<-c("PreB", "PreT", "T")
+
+
+# Calculate dispersion and fit the result with edgeR (necessary for differential expression analysis)
+edge_d_subtype <- estimateDisp(edge_n_subtypes,design_subtype)
+
+# Fit the data we model the data using a negative binomial distribution
+edge_f_subtype<-glmQLFit(edge_d_subtype, design_subtype)
+
+# Definition of the contrast (conditions to be compared)
+contro_subtype_B <- makeContrasts("PreB-(PreT+T)/2", levels=design_subtype)
+#contro_subtype[,"PreB-PreT-T"]<-c(1, -0.5, -0.5)
+
+# Fit the model with generalized linear models
+edge_t_subtype_B <- glmQLFTest(edge_f_subtype,contrast=contro_subtype_B)
+
+# edge_t contains the results of the DE analysis
+# -> we can extract the data using the function topTags -> extract the top20, using a cut off and sorting by fold-change
+# -> we get the top 20 DE genes
+#  We sort for the fold change
+DEGs_subtype_B <- as.data.frame(topTags(edge_t_subtype_B,n=21420,p.value = 0.01,sort.by = "logFC"))
+
+# We add a new column to the DEGs dataframe called class.
+# Used to express the values of the fold change of the transcripts.
+# The selection is based on the log fold change ratio (>1.5 for up-regulated genes and < (-1.5) for down-regulated genes)
+# and a log CPM (>1 for both cases). From the contingency table of our DEGs we can see that the up regulated genes
+# correspond to the 3.7% of the total and the down regulated are the 16% of the total.
+
+DEGs_subtype_B$class <- '='
+DEGs_subtype_B$class[which(DEGs_subtype_B$logCPM > 1 & DEGs_subtype_B$logFC > 1.5)] = '+'
+DEGs_subtype_B$class[which(DEGs_subtype_B$logCPM > 1 & DEGs_subtype_B$logFC < (-1.5))] = '-'
+DEGs_subtype_B <- DEGs_subtype_B[order(DEGs_subtype_B$logFC, decreasing = T),] # we order based on the fold change
+
+table(DEGs_subtype_B$class)
+# +: 462  -:432     =: 7894 
+
+# Let`s check how many human specific genes we have in the up regulated and down regulated genes in Pre B type
+#  We have 22 down-reg HS genes and 16 up-regulated HS genes
+DEGs_subtype_B_HS <- DEGs_subtype_B %>% dplyr::filter(rownames(DEGs_subtype_B) %in% Human_genes$`Ensembl ID`)
+Up_HS_PreB <- DEGs_subtype_B[DEGs_subtype_B$class=='+',] %>% dplyr::filter(rownames(DEGs_subtype_B[DEGs_subtype_B$class=='+',]) %in% Human_genes$`Ensembl ID`) 
+Down_HS_PreB<- DEGs_subtype_B[DEGs_subtype_B$class=='-',] %>% dplyr::filter(rownames(DEGs_subtype_B[DEGs_subtype_B$class=='-',]) %in% Human_genes$`Ensembl ID`) 
+
+# Subtype PreT vs all
+
+# Definition of the contrast (conditions to be compared)
+contro_subtype_PT <- makeContrasts("PreT-(PreB+T)/2", levels=design_subtype)
+#contro_subtype[,"PreB-PreT-T"]<-c(1, -0.5, -0.5)
+
+# Fit the model with generalized linear models
+edge_t_subtype_PT<- glmQLFTest(edge_f_subtype,contrast=contro_subtype_PT)
+
+# edge_t contains the results of the DE analysis
+# -> we can extract the data using the function topTags -> extract the top20, using a cut off and sorting by fold-change
+# -> we get the top 20 DE genes
+#  We sort for the fold change
+DEGs_subtype_PT <- as.data.frame(topTags(edge_t_subtype_PT,n=21420,p.value = 0.01,sort.by = "logFC"))
+
+# We add a new column to the DEGs dataframe called class.
+# Used to express the values of the fold change of the transcripts.
+# The selection is based on the log fold change ratio (>1.5 for up-regulated genes and < (-1.5) for down-regulated genes)
+# and a log CPM (>1 for both cases). From the contingency table of our DEGs we can see that the up regulated genes
+# correspond to the 3.7% of the total and the down regulated are the 16% of the total.
+
+DEGs_subtype_PT$class <- '='
+DEGs_subtype_PT$class[which(DEGs_subtype_PT$logCPM > 1 & DEGs_subtype_PT$logFC > 1.5)] = '+'
+DEGs_subtype_PT$class[which(DEGs_subtype_PT$logCPM > 1 & DEGs_subtype_PT$logFC < (-1.5))] = '-'
+DEGs_subtype_PT <- DEGs_subtype_PT[order(DEGs_subtype_PT$logFC, decreasing = T),] # we order based on the fold change
+
+table(DEGs_subtype_PT$class)
+# +: 482  -:848   =: 6773 
+
+# Let`s check how many human specific genes we have in the up regulated and down regulated genes in Pre B type
+#  We have 32 down-reg HS genes and 16 up-regulated HS genes
+DEGs_subtype_PT_HS <- DEGs_subtype_PT %>% dplyr::filter(rownames(DEGs_subtype_PT) %in% Human_genes$`Ensembl ID`)
+Up_HS_PreT <- DEGs_subtype_PT[DEGs_subtype_PT$class=='+',] %>% dplyr::filter(rownames(DEGs_subtype_PT[DEGs_subtype_PT$class=='+',]) %in% Human_genes$`Ensembl ID`) 
+Down_HS_PreT<- DEGs_subtype_PT[DEGs_subtype_PT$class=='-',] %>% dplyr::filter(rownames(DEGs_subtype_PT[DEGs_subtype_PT$class=='-',]) %in% Human_genes$`Ensembl ID`) 
+
+# T subtype vs all
+# Subtype PreT vs all
+
+# Definition of the contrast (conditions to be compared)
+contro_subtype_T <- makeContrasts("T-(PreB+PreT)/2", levels=design_subtype)
+#contro_subtype[,"PreB-PreT-T"]<-c(1, -0.5, -0.5)
+
+# Fit the model with generalized linear models
+edge_t_subtype_T<- glmQLFTest(edge_f_subtype,contrast=contro_subtype_T)
+
+# edge_t contains the results of the DE analysis
+# -> we can extract the data using the function topTags -> extract the top20, using a cut off and sorting by fold-change
+# -> we get the top 20 DE genes
+#  We sort for the fold change
+DEGs_subtype_T <- as.data.frame(topTags(edge_t_subtype_T,n=21420,p.value = 0.01,sort.by = "logFC"))
+
+# We add a new column to the DEGs dataframe called class.
+# Used to express the values of the fold change of the transcripts.
+# The selection is based on the log fold change ratio (>1.5 for up-regulated genes and < (-1.5) for down-regulated genes)
+# and a log CPM (>1 for both cases). From the contingency table of our DEGs we can see that the up regulated genes
+# correspond to the 3.7% of the total and the down regulated are the 16% of the total.
+
+DEGs_subtype_T$class <- '='
+DEGs_subtype_T$class[which(DEGs_subtype_T$logCPM > 1 & DEGs_subtype_T$logFC > 1.5)] = '+'
+DEGs_subtype_T$class[which(DEGs_subtype_T$logCPM > 1 & DEGs_subtype_T$logFC < (-1.5))] = '-'
+DEGs_subtype_T <- DEGs_subtype_T[order(DEGs_subtype_T$logFC, decreasing = T),] # we order based on the fold change
+
+table(DEGs_subtype_T$class)
+# +: 381  -:16   =: 3848 
+
+# Let`s check how many human specific genes we have in the up regulated and down regulated genes in Pre B type
+#  We have 0 down-reg HS genes and 33 up-regulated HS genes
+DEGs_subtype_T_HS <- DEGs_subtype_T %>% dplyr::filter(rownames(DEGs_subtype_T) %in% Human_genes$`Ensembl ID`)
+Up_HS_T <- DEGs_subtype_T[DEGs_subtype_T$class=='+',] %>% dplyr::filter(rownames(DEGs_subtype_T[DEGs_subtype_T$class=='+',]) %in% Human_genes$`Ensembl ID`) 
+Down_HS_T<- DEGs_subtype_T[DEGs_subtype_T$class=='-',] %>% dplyr::filter(rownames(DEGs_subtype_T[DEGs_subtype_T$class=='-',]) %in% Human_genes$`Ensembl ID`) 
+
+#### COMPARISON BETWEEN THE HS IN THE 3 SUBTYPES -> NOT sure of the code
+Common_T_PT <- Up_HS_T[rownames(Up_HS_T) %in% rownames(Up_HS_PreT),]
+# 2 in common!
+Common_PT_PB <- Up_HS_PreT[rownames(Up_HS_PreT) %in% rownames(Up_HS_PreB),]
+# 0 in common
+Common_T_PB <- Up_HS_T[rownames(Up_HS_T) %in% rownames(Up_HS_PreB),]
+# 2 in common
+Common_T_PT_D <- Down_HS_T[rownames(Down_HS_T) %in% rownames(Down_HS_PreT),]
+# 0 in common
+Common_T_PB_D <- Down_HS_T[rownames(Down_HS_T) %in% rownames(Down_HS_PreB),]
+# 0 in common
+Common_PT_PB_D <- Down_HS_PreT[rownames(Down_HS_PreT) %in% rownames(Down_HS_PreB),]
+# 6 in common -> PreB has 22 down hs while PreT 23
+
+############ DEG adults vs pediatric
+
+# creating a dataframe containing the info on the samples, this is needed to be able to perform the DGE
+
+# clusterino_pam2 contains in Cell type columns the info on the subtypes
+info_age<-clusterino_pam2
+
+# Now we can create the DGEList object
+# edge_c_total <- DGEList(counts = total_adjusted1, group=info_samples$condition, samples=info_samples, genes=total_adjusted1)
+# edge_n_total <- calcNormFactors(edge_c_total,method = 'TMM')
+
+#######
+edge_c_age <- DGEList(counts = tumor_adjusted1, group=info_age$type, samples=info_age, genes=tumor_adjusted1)
+edge_n_age <- calcNormFactors(edge_c_age,method = 'TMM')
+# We create the cpm table
+cpm_table_age <-as.data.frame(round(cpm(edge_n_age),2)) # the library size is scaled by the normalization factor
+
+# Here we define the experimental design matrix, we build a model with no intercept also we have two varaibles, one for each condition 
+# 1 for control and 2 for tumor 
+design_age<- model.matrix(~0+group, data = edge_n_age$samples)
+colnames(design_age) <- levels(edge_n_age$samples$group)
+rownames(design_age) <- edge_n_age$samples$sample
+
+
+
+# Calculate dispersion and fit the result with edgeR (necessary for differential expression analysis)
+edge_d_age <- estimateDisp(edge_n_age,design_age)
+
+# Fit the data we model the data using a negative binomial distribution
+edge_f_age<-glmQLFit(edge_d_age, design_age)
+
+# Definition of the contrast (conditions to be compared)
+contro_age <- makeContrasts("pediatric-adult", levels=design_age)
+
+# Fit the model with generalized linear models
+edge_t_age<- glmQLFTest(edge_f_age,contrast=contro_age)
+
+# edge_t contains the results of the DE analysis
+# -> we can extract the data using the function topTags -> extract the top20, using a cut off and sorting by fold-change
+# -> we get the top 20 DE genes
+#  We sort for the fold change
+DEGs_age <- as.data.frame(topTags(edge_t_age,n=21420,p.value = 0.01,sort.by = "logFC"))
+
+# We add a new column to the DEGs dataframe called class.
+# Used to express the values of the fold change of the transcripts.
+# The selection is based on the log fold change ratio (>1.5 for up-regulated genes and < (-1.5) for down-regulated genes)
+# and a log CPM (>1 for both cases). From the contingency table of our DEGs we can see that the up regulated genes
+# correspond to the 3.7% of the total and the down regulated are the 16% of the total.
+
+DEGs_age$class <- '='
+DEGs_age$class[which(DEGs_age$logCPM > 1 & DEGs_age$logFC > 1.5)] = '+'
+DEGs_age$class[which(DEGs_age$logCPM > 1 & DEGs_age$logFC < (-1.5))] = '-'
+DEGs_age <- DEGs_age[order(DEGs_age$logFC, decreasing = T),] # we order based on the fold change
+
+table(DEGs_age$class)
+# +:55 -: 108  =: 3508  
+     
+
+# Let`s check how many human specific genes we have in the up regulated and down regulated genes in pediatric cancer
+#  We have 10 down-reg HS genes and 6 up-regulated HS genes
+DEGs_age_HS <- DEGs_age %>% dplyr::filter(rownames(DEGs_age) %in% Human_genes$`Ensembl ID`)
+Up_HS_age <- DEGs_age[DEGs_age$class=='+',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='+',]) %in% Human_genes$`Ensembl ID`) 
+Down_HS_age<- DEGs_age[DEGs_age$class=='-',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='-',]) %in% Human_genes$`Ensembl ID`) 
+
+
 
