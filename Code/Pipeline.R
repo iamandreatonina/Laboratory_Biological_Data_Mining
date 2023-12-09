@@ -890,4 +890,48 @@ Up_HS_age <- DEGs_age[DEGs_age$class=='+',] %>% dplyr::filter(rownames(DEGs_age[
 Down_HS_age<- DEGs_age[DEGs_age$class=='-',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='-',]) %in% Human_genes$`Ensembl ID`) 
 
 
+# VALIDATION OF ONEGENE - STRING
+# install.packages('rbioapi')
+library(rbioapi)
 
+
+pre_expansion <- read.csv('Expansion_genes.csv')
+colnames(pre_expansion)<-c('index', 'HGSymbol')
+expansion<-pre_expansion[-1]
+
+# Step 1: map the ids to string ids
+
+sublista1<-expansion$HGSymbol[0:50]
+protein_mapped<-rba_string_map_ids(ids=sublista1, species=9606) # 9606 equal homo sapiens
+
+for (i in 51:2350){
+  if (i%%50==0){
+    #print(i)
+    up=i-49
+    down=i
+    print(up)
+    print(down)
+    sublista<-expansion$HGSymbol[up:down]
+    new<-rba_string_map_ids(ids=sublista, species=9606)
+    protein_mapped<-rbind(protein_mapped, new)
+    sublista<-0
+  }
+}
+# i also add the last 7 genes!
+sublista<-expansion$HGSymbol[2351:2357]
+new<-rba_string_map_ids(ids=sublista, species=9606)
+protein_mapped<-rbind(protein_mapped, new)
+# we now have the 'stringId column
+
+# functional enrichment
+enriched<-rba_string_enrichment(ids=expansion$HGSymbol, species=9606)
+View(enriched$Process)
+
+# protein-protein interaction enrichment
+
+enrich_interaction<- rba_string_enrichment_ppi(ids=expansion$HGSymbol, species=9606)
+
+# getting functional annotation
+
+annotation<-rba_string_annotations(ids=expansion$HGSymbol, species=9606)
+View(annotation$DISEASES)
