@@ -75,7 +75,7 @@ Databases <- data.frame(dbs$libraryName)
 # Enrichment analysis for DrugMatrix and IDG_Drug_Targets_2022 databases
 
 # Define the databases for enrichment analysis
-dbs_dd <- c("DrugMatrix", "IDG_Drug_Targets_2022")
+dbs_dd <- c("DrugMatrix")
 
 # Perform enrichment analysis for DEGs_subtype_T
 upClinical_T <- enrichr(genes = convert_T$external_gene_name, databases = dbs_dd)
@@ -92,10 +92,11 @@ write.csv(DM_up_T, "DM_up_T.csv", row.names = TRUE)
 # Sort the dataframe based on the "Combined.Score" column in descending order
 sorted_DM_up_T <- head(DM_up_T[order(DM_up_T$Combined.Score, decreasing = TRUE), ],5)
 
-IDG_up_T <- data.frame(upClinical_T[["IDG_Drug_Targets_2022"]])
-write.csv(IDG_up_T, "IDG_up_T.csv", row.names = TRUE)
+
+#IDG_up_T <- data.frame(upClinical_T[["IDG_Drug_Targets_2022"]])
+#write.csv(IDG_up_T, "IDG_up_T.csv", row.names = TRUE)
 # Sort the dataframe based on the "Combined.Score" column in descending order
-sorted_IDG_up_T <- head(IDG_up_T[order(IDG_up_T$Combined.Score, decreasing = TRUE), ],5)
+#sorted_IDG_up_T <- head(IDG_up_T[order(IDG_up_T$Combined.Score, decreasing = TRUE), ],5)
 
 
 
@@ -105,10 +106,10 @@ write.csv(DM_up_PT, "DM_up_PT.csv", row.names = TRUE)
 # Sort the dataframe based on the "Combined.Score" column in descending order
 sorted_DM_up_PT <- head(DM_up_PT[order(DM_up_PT$Combined.Score, decreasing = TRUE), ],5)
 
-IDG_up_PT <- data.frame(upClinical_PT[["IDG_Drug_Targets_2022"]])
-write.csv(IDG_up_PT, "IDG_up_PT.csv", row.names = TRUE)
+#IDG_up_PT <- data.frame(upClinical_PT[["IDG_Drug_Targets_2022"]])
+#write.csv(IDG_up_PT, "IDG_up_PT.csv", row.names = TRUE)
 ### Sort the dataframe based on the "Combined.Score" column in descending order
-sorted_IDG_up_PT <- head(IDG_up_PT[order(IDG_up_PT$Combined.Score, decreasing = TRUE), ],5)
+#sorted_IDG_up_PT <- head(IDG_up_PT[order(IDG_up_PT$Combined.Score, decreasing = TRUE), ],5)
 
 
 
@@ -118,18 +119,29 @@ write.csv(DM_up_PB, "DM_up_PB.csv", row.names = TRUE)
 # Sort the dataframe based on the "Combined.Score" column in descending order
 sorted_DM_up_PB <- head(DM_up_PB[order(DM_up_PB$Combined.Score, decreasing = TRUE), ],5)
 
-IDG_up_PB <- data.frame(upClinical_PB[["IDG_Drug_Targets_2022"]])
-write.csv(IDG_up_PB, "IDG_up_PB.csv", row.names = TRUE)
+#IDG_up_PB <- data.frame(upClinical_PB[["IDG_Drug_Targets_2022"]])
+#write.csv(IDG_up_PB, "IDG_up_PB.csv", row.names = TRUE)
 # Sort the dataframe based on the "Combined.Score" column in descending order
-sorted_IDG_up_PB <- head(IDG_up_PB[order(IDG_up_PB$Combined.Score, decreasing = TRUE), ],5)
+#sorted_IDG_up_PB <- head(IDG_up_PB[order(IDG_up_PB$Combined.Score, decreasing = TRUE), ],5)
+
+#### Function to keep only "Term" and "Genes" columns and write to CSV ####
+process_and_write <- function(dataframe, output_filename) {
+  dataframe_subset <- dataframe[, c("Term","Combined.Score", "Genes")]
+  write.csv(dataframe_subset, output_filename, row.names = FALSE)
+}
+
+# Apply the function to each dataframe
+process_and_write(sorted_DM_up_PT, "sorted_DM_up_T.csv")
+process_and_write(sorted_DM_up_PT, "sorted_DM_up_PT.csv")
+process_and_write(sorted_DM_up_PB, "sorted_DM_up_PB.csv")
 
 
+#### Plots ####
+plotEnrich(upClinical_T[[1]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
 
-plotEnrich(upClinical_T[[2]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
+plotEnrich(upClinical_PT[[1]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
 
-plotEnrich(upClinical_PT[[2]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
-
-plotEnrich(upClinical_PB[[2]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
+plotEnrich(upClinical_PB[[1]], showTerms = 20, numChar = 50, y = "Count", orderBy = "Combined.Score")
 
 
 
