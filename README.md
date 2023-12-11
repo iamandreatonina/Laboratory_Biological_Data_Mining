@@ -12,26 +12,12 @@ Project developed by:
   * Sabri Kaci [sanka95](https://github.com/sabka95)
 
 <img src="https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Logo_group/photo_5929434998077767761_y.jpg" width = 300  alt ="group_logo" />
+##Topic 
+Study Human-specific genes in Acute Lymphoid Leukemia
 
-## Topic: Human-specific genes and human diseases
-Genes evolved specifically in the human lineage after the split from the lineage leading to the chimpanzee and bonobo (around 6-7 million years ago). They potentially explain huge body alterations between humans and chimpanzees, such as average height and brain size (3-fold difference) They are potentially relevant for “human-specific” diseases (Pediatric brain tumors? Pediatric leukemias?)
+## Abstract 
+The term human-specific genes highlights a set of genes that characterize us as humans and cannot be found in our closest relatives, the chimpanzees. The role of human-specific (HS) genes is yet to be completely discovered and understood. Several studies have been carried out to identify and extend the list of known human-specific genes, with the final objective of understanding their linkage with human diseases. This study tries to extend our knowledge of human-specific genes regarding Acute Lymphoblastic Leukemia (ALL) by investigating the associations between HS genes and ALL using quantitative methodologies such as machine learning-based approaches and network gene expansions.
 
-## Broad questions 
- * Are human-specific genes connected by causal relationships?
- * Is their expression altered in specific diseases (pediatric brain and blood cancers?)
-------
-Constraints: Use causal relationships among human genes obtained from the Fantom project
-
-## Drive and Overleaf
-* [Gdrive](https://drive.google.com/drive/u/1/folders/1jI8i7Q-_5FvG3Rgb_g2FEvZIJ5eKVb4O)
+## Overleaf
 * [Overleaf](https://it.overleaf.com/project/65295dce804a74efe5e6b6fc)
   
-## Useful links 
-* [github for project](https://github.com/annalisaxamin/LBDM)
-* [2 project](https://github.com/VittoriaOssanna/BiologicalDM_project)
-* [3 project](https://github.com/Elisshaze/LBDM-project)
-* https://github.com/zhangyuqing/ComBat-seq
-
-## Model 
-* [GOEGCN_BRCA_Subtypes](https://github.com/yxchspring/GOEGCN_BRCA_Subtypes)
-* Python,[Scikit-learn library](https://scikit-learn.org/stable/)
