@@ -220,9 +220,6 @@ DEGs$class[which(DEGs$logCPM > 1 & DEGs$logFC < (-1.5))] = '-'
 DEGs <- DEGs[order(DEGs$logFC, decreasing = T),] # we order based on the fold change
 
 table(DEGs$class)
-# -:2942,+:683,=:7669
-# after :    -:2693   +:756    =:5986
-
 #rigth one   -756    + 2693   = 5986
    
   
@@ -233,9 +230,9 @@ table(DEGs$class)
 DEGs_Hsgenes <- DEGs %>% dplyr::filter(rownames(DEGs) %in% Human_genes$`Ensembl ID`)
 Up_HSgenes <- DEGs[DEGs$class=='+',] %>% dplyr::filter(rownames(DEGs[DEGs$class=='+',]) %in% Human_genes$`Ensembl ID`) 
 Down_HSgenes <- DEGs[DEGs$class=='-',] %>% dplyr::filter(rownames(DEGs[DEGs$class=='-',]) %in% Human_genes$`Ensembl ID`) 
-
+table(DEGs_Hsgenes$class)
 # after the filter of median more than 5 
-# down-reg 103 and 19 up reg
+# down-reg 19 and 103 up reg
 
 # Display the results using a volcano plot (x-axes: log FoldChange, y-axes: inverse function of the p-value).
 # We can see the most significant DEGs colored in green, which are genes that surpass a threshold set on both the p-value
@@ -396,14 +393,17 @@ components<-data.PC.tumor[["x"]]
 components<-data.frame(components)
 components<-cbind(components, clusterino_pam2)
 components$PC2<- -components$PC2
+
+components$`(pam2$clustering)` <- as.factor(components$`(pam2$clustering)`)
+
 fig<-plot_ly(components, x=~PC1, y=~PC2, color=clusterino_pam2$`(pam2$clustering)`,colors=c('cadetblue1', 'red', 
 'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,type='scatter',mode='markers') #  %>%
 # layout(legend = list(title = list(text = 'color')))
 
 fig
 
-fig2<-plot_ly(components, x=~PC1, y=~PC2, z=~PC3,color=clusterino_pam2$`(pam2$clustering)`,colors=c('cadetblue1', 'red', 
-                                                                                            'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,mode='markers') #  %>%
+
+fig2<-plot_ly(components, x=~PC1, y=~PC2, z=~PC3,color=components$`(pam2$clustering)`,colors=brewer.pal(n = 8, name = "RdBu") ,mode='markers',marker = list(size = 4)) #  %>%
 fig2
 
 #######
@@ -412,14 +412,16 @@ components_nonHS<-data.PC_nonHG_tumor$x
 # components<-data.frame(components)
 components_nonHS<-cbind(components_nonHS, clusterino_pam2_nonHS)
 components_nonHS$PC2<- -components_nonHS$PC2
+components_nonHS$`(pam2_nonHS$clustering)`<- as.factor(components_nonHS$`(pam2_nonHS$clustering)`)
+
+
 fig_nonHS<-plot_ly(components_nonHS, x=~PC1, y=~PC2, color=clusterino_pam2_nonHS$`(pam2_nonHS$clustering)`,colors=c('cadetblue1', 'red', 
                                                                                             'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,type='scatter',mode='markers') #  %>%
 # layout(legend = list(title = list(text = 'color')))
 
 fig_nonHS
 
-fig2_nonHS<-plot_ly(components_nonHS, x=~PC1, y=~PC2, z=~PC3,color=clusterino_pam2_nonHS$`(pam2_nonHS$clustering)`,colors=c('cadetblue1', 'red', 
-                                                                                                    'chartreuse3','blueviolet','blue4','darkgoldenrod2','darksalmon','seagreen4') ,mode='markers') #  %>%
+fig2_nonHS<-plot_ly(components_nonHS, x=~PC1, y=~PC2, z=~PC3, color =components_nonHS$`(pam2_nonHS$clustering)`, colors=brewer.pal(n = 8, name = "RdBu") ,mode='markers',marker = list(size = 4)) #  %>%
 fig2_nonHS
 # layout(legend = list(title = list(text = 'color')))
 
@@ -570,7 +572,7 @@ component6$PC2 <- -component6$PC2
 write.csv(component6,file='ML_nonHS.csv',row.names = T)
 
 ##### sistemare 
-fig9_nonHS<-plot_ly(component6, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1_nonHS$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1_nonHS$type, symbols = c('circle','square'), mode='markers',marker = list(size = 4))
+fig9_nonHS<-plot_ly(component6, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1_nonHS$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1_nonHS$type, symbols = c('diamond','circle'), mode='markers',marker = list(size = 4))
 fig9_nonHS
 
 ##############
@@ -580,8 +582,16 @@ fig9_nonHS
 
 Categories_HS <- Human_genes %>% dplyr::filter(Human_genes$`Ensembl ID` %in% rownames(Diff_expressed ))
 table(Categories_HS$`General Mechanism of Origin`)
-barplot(table(Categories_HS$`General Mechanism of Origin`), horiz=T, names.arg=c("1","2","3","4","5","6","7","8","9"),col=brewer.pal(n = 9, name = "RdBu"))
-legend(x="topright", inset=.02,y.intersp = 1,title="Mechanism of origin", legend=c("de novo origin","amplification","loss","sequence alteration","structure alteration","undefined feature","lost in chimpanzee","new non-coding gene","regulatory region alteration"), fill=brewer.pal(n = 9, name = "RdBu"), cex=0.7)
+barplot(table(Categories_HS$`General Mechanism of Origin`), horiz=T, names.arg=c("1","2","3","4","5","6","7","8","9"),col=brewer.pal(n = 9, name = "Set1"))
+legend(x="topright", inset=.02,y.intersp = 1,title="Mechanism of origin", legend=c("de novo origin","amplification","loss","sequence alteration","structure alteration","undefined feature","lost in chimpanzee","new non-coding gene","regulatory region alteration"), fill=brewer.pal(n = 9, name = "Set1"), cex=0.7)
+
+slices<-c(1,63,4,21,10,11,3,1,8)
+pct<-round(slices/sum(slices)*100)
+lbs<-c("","","","","","","","","")
+lbs<-paste(lbs,pct)
+lbs<-paste(lbs,"%",sep=" ")
+pie(slices, lbs,col=brewer.pal(n = 9, name = "Set1"))
+legend(x="topright", inset=.02,y.intersp = 1,title="Mechanism of origin", legend=c("de novo origin","amplification","loss","sequence alteration","structure alteration","human specific","lost in chimpanzee","new non-coding gene","regulatory region alteration"), fill=brewer.pal(n = 9, name = "Set1"), cex=0.7)
 
 ##########
 
@@ -613,7 +623,7 @@ barplot(ego_BP_UP, showCategory = 15)
 
 dotplot(ego_BP_UP, showCategory=15)
 
-heatplot(ego_BP_UP, showCategory = 5)
+heatplot(ego_BP_UP, showCategory = 2)
 
 eWP_BP_UP <- enrichWP(gene =Up_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05, qvalueCutoff = 0.1 )
 
@@ -626,11 +636,11 @@ barplot(ego_BP_DW, showCategory = 15)
 
 dotplot(ego_BP_DW, showCategory=15)
 
-heatplot(ego_BP_DW, showCategory = 5)
+heatplot(ego_BP_DW, showCategory = 2)
 
 eWP_BP_DW <- enrichWP(gene =Down_DEGs_merge_convert$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05, qvalueCutoff = 0.1 )
 
-head(eWP_BP_DW,10)
+head(eWP_BP_DW@result[["Description"]],10)
 ################# HS
 
 convert_HS <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = rownames(DEGs_Hsgenes), mart = ensmebl)
@@ -653,6 +663,11 @@ barplot(ego_BP_UP_HS)
 
 dotplot(ego_BP_UP_HS, showCategory=15)
 
+heatplot(ego_BP_UP_HS, showCategory = 2)
+
+
+
+
 # pathway annotation will be done after the gene expansion, due to lack of informations, to low numbers of terms
 # eWP_BP_UP_HS <- enrichWP(gene =Up_DEGs_merge_convert_HS$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 1, qvalueCutoff = 0.2)
 # 
@@ -666,6 +681,7 @@ barplot(ego_BP_DW_HS)
 
 dotplot(ego_BP_DW_HS)
 
+heatplot(ego_BP_DW_HS, showCategory = 2)
 
 
 ############ ############# DEGs
@@ -825,6 +841,13 @@ Common_T_PB_D <- Down_HS_T[rownames(Down_HS_T) %in% rownames(Down_HS_PreB),]
 Common_PT_PB_D <- Down_HS_PreT[rownames(Down_HS_PreT) %in% rownames(Down_HS_PreB),]
 # 6 in common -> PreB has 22 down hs while PreT 23
 
+## FIle creation
+#write.csv(DEGs_subtype_T,file = 'DEGs_subtype_T.csv',row.names = T, col.names = T)
+
+#write.csv(DEGs_subtype_PT,file = 'DEGs_subtype_PT.csv',row.names = T, col.names = T)
+
+#write.csv(DEGs_subtype_B,file = 'DEGs_subtype_B.csv',row.names = T, col.names = T)
+
 ############ DEG adults vs pediatric
 
 # creating a dataframe containing the info on the samples, this is needed to be able to perform the DGE
@@ -889,49 +912,212 @@ DEGs_age_HS <- DEGs_age %>% dplyr::filter(rownames(DEGs_age) %in% Human_genes$`E
 Up_HS_age <- DEGs_age[DEGs_age$class=='+',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='+',]) %in% Human_genes$`Ensembl ID`) 
 Down_HS_age<- DEGs_age[DEGs_age$class=='-',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='-',]) %in% Human_genes$`Ensembl ID`) 
 
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = row.names(Up_HS_age), mart = ensmebl)
+Up_HS_age$ensembl_gene_id<-row.names(Up_HS_age)
+
+merged <- merge(Up_HS_age, convert, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+up_age_hs <- enrichGO(gene = merged$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 1, qvalueCutoff = 1)
+
+barplot(up_age_hs, showCategory = 15)
+
+dotplot(up_age_hs, showCategory=15)
+
+heatplot(up_age_hs, showCategory = 5)
+
+# kegg
+
+up_age <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1, qvalueCutoff = 0.1 )
+
+head(up_age,10)
+
+# down
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = row.names(Down_HS_age), mart = ensmebl)
+Down_HS_age$ensembl_gene_id<-row.names(Down_HS_age)
+
+merged <- merge(Down_HS_age, convert, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+down_age_hs <- enrichGO(gene = merged$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 1, qvalueCutoff = 1)
+
+barplot(down_age_hs, showCategory = 15)
+
+dotplot(down_age_hs, showCategory=15)
+
+heatplot(down_age_hs, showCategory = 5)
+
+# kegg
+
+down_age_wp <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1, qvalueCutoff = 0.1 )
+
+head(down_age_wp, 10)
+
+# non hs
+
+Up_age <- DEGs_age[DEGs_age$class=='+',]
+Down_age<- DEGs_age[DEGs_age$class=='-',]
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = row.names(Up_age), mart = ensmebl)
+Up_age$ensembl_gene_id<-row.names(Up_age)
+
+merged <- merge(Up_age, convert, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+Up_age_BP <- enrichGO(gene = merged$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 1, qvalueCutoff = 1)
+
+barplot(Up_age_BP, showCategory = 15)
+
+dotplot(Up_age_BP, showCategory=15)
+
+heatplot(Up_age_BP, showCategory = 5)
+
+# kegg
+
+up_age <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 1, qvalueCutoff = 0.1 )
+
+head(up_age,10)
+
+# down
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = row.names(Down_age), mart = ensmebl)
+Down_age$ensembl_gene_id<-row.names(Down_age)
+
+merged <- merge(Down_age, convert, by.x = 'ensembl_gene_id', by.y = 'ensembl_gene_id')
+
+down_age_BP<- enrichGO(gene = merged$external_gene_name, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 1, qvalueCutoff = 1)
+
+barplot(down_age_BP, showCategory = 15)
+
+dotplot(down_age_BP, showCategory=15)
+
+heatplot(down_age_BP, showCategory = 5)
+
+# kegg
+
+down_age_wp <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1, qvalueCutoff = 0.1 )
+
+head(down_age_wp, 10)
+
+
 
 # VALIDATION OF ONEGENE - STRING
 # install.packages('rbioapi')
 library(rbioapi)
 
-
-pre_expansion <- read.csv('Expansion_genes.csv')
+pre_expansion <- read.csv('Expansion_files/ZNF850.csv')
 colnames(pre_expansion)<-c('index', 'HGSymbol')
 expansion<-pre_expansion[-1]
-
-# Step 1: map the ids to string ids
-
-sublista1<-expansion$HGSymbol[0:50]
-protein_mapped<-rba_string_map_ids(ids=sublista1, species=9606) # 9606 equal homo sapiens
-
-for (i in 51:2350){
-  if (i%%50==0){
-    #print(i)
-    up=i-49
-    down=i
-    print(up)
-    print(down)
-    sublista<-expansion$HGSymbol[up:down]
-    new<-rba_string_map_ids(ids=sublista, species=9606)
-    protein_mapped<-rbind(protein_mapped, new)
-    sublista<-0
-  }
-}
-# i also add the last 7 genes!
-sublista<-expansion$HGSymbol[2351:2357]
-new<-rba_string_map_ids(ids=sublista, species=9606)
-protein_mapped<-rbind(protein_mapped, new)
-# we now have the 'stringId column
-
+protein_mapped<-rba_string_map_ids(ids=expansion$HGSymbol, species=9606) # 9606 equal homo sapiens
 # functional enrichment
-enriched<-rba_string_enrichment(ids=expansion$HGSymbol, species=9606)
-View(enriched$Process)
+enriched<-rba_string_enrichment(ids=protein_mapped$preferredName, species=9606)
 
 # protein-protein interaction enrichment
 
-enrich_interaction<- rba_string_enrichment_ppi(ids=expansion$HGSymbol, species=9606)
+enrich_interaction<- rba_string_enrichment_ppi(ids=protein_mapped$preferredName, species=9606)
 
-# getting functional annotation
 
-annotation<-rba_string_annotations(ids=expansion$HGSymbol, species=9606)
-View(annotation$DISEASES)
+annotation<-rba_string_annotations(ids=protein_mapped$preferredName, species=9606)
+
+interactome_string<-rba_string_interactions_network(protein_mapped$preferredName, species = 9606)
+
+# odd ratio and pvalue
+
+expansion <- dplyr::mutate_all(expansion, .funs = toupper)
+count<- interactome_string %>% dplyr::filter(interactome_string$preferredName_B %in% expansion$HGSymbol)
+
+library(GeneOverlap)
+overlap<-newGeneOverlap(expansion$HGSymbol, interactome_string$preferredName_B)
+go.obj<-testGeneOverlap(overlap)
+getContbl(go.obj)
+print(go.obj)
+
+# Analysis pathway and GO of the single graphs from python network x
+
+graph1 <- read.csv('Graph1_5HS.csv')
+graph1<- dplyr::mutate_all(graph1, .funs = toupper)
+
+graph1_BP <- enrichGO(gene = graph1$X0, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.1, qvalueCutoff = 1)
+
+barplot(graph1_BP, showCategory = 15)
+
+dotplot(graph1_BP, showCategory=15)
+
+heatplot(graph1_BP, showCategory = 5)
+
+# kegg
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('external_gene_name'), values = graph1$X0, mart = ensmebl)
+
+
+merged <- merge(graph1, convert, by.x = 'X0', by.y = 'external_gene_name')
+
+
+wp_graph1 <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.05, qvalueCutoff = 0.1 )
+
+head(wp_graph1,10)
+
+# graph2
+
+graph2 <- read.csv('Graph2_3HS.csv')
+graph2<- dplyr::mutate_all(graph2, .funs = toupper)
+
+graph2_BP <- enrichGO(gene = graph2$X0, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 0.1, qvalueCutoff = 1)
+
+barplot(graph2_BP, showCategory = 15)
+
+dotplot(graph2_BP, showCategory=15)
+
+heatplot(graph2_BP, showCategory = 5)
+
+# kegg
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('external_gene_name'), values = graph2$X0, mart = ensmebl)
+
+
+merged <- merge(graph2, convert, by.x = 'X0', by.y = 'external_gene_name')
+
+
+wp_graph2 <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1, qvalueCutoff = 0.1 )
+
+head(wp_graph2,10)
+
+# graph3
+
+graph3 <- read.csv('Graph3_3HS.csv')
+graph3<- dplyr::mutate_all(graph3, .funs = toupper)
+
+graph3_BP <- enrichGO(gene = graph3$X0, OrgDb = org.Hs.eg.db, keyType = 'SYMBOL',ont = 'BP',pAdjustMethod = 'BH',pvalueCutoff = 1, qvalueCutoff = 1)
+
+barplot(graph3_BP, showCategory = 15)
+
+dotplot(graph3_BP, showCategory=15)
+
+heatplot(graph3_BP, showCategory = 5)
+
+# kegg
+
+convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('external_gene_name'), values = graph3$X0, mart = ensmebl)
+
+
+merged <- merge(graph3, convert, by.x = 'X0', by.y = 'external_gene_name')
+
+
+wp_graph3 <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', pvalueCutoff = 0.1, qvalueCutoff = 0.1 )
+
+head(wp_graph3,10)
+
+
+## TRy again the pipelin on teh genes:
+# nbpf14','gtf2i','fam156a''tmem236', 'nrxn3', 'mrc1' grapl', 'lrrc37a', 'lrrc37a3', 'arl17a', 'stag3'
+
+pre_expansion <- read.csv('Expansion_files/GRAPL.csv')
+colnames(pre_expansion)<-c('index', 'HGSymbol')
+expansion<-pre_expansion[-1]
+protein_mapped<-rba_string_map_ids(ids=expansion$HGSymbol, species=9606) # 9606 equal homo sapiens
+# functional enrichment
+expansion <- dplyr::mutate_all(expansion, .funs = toupper)
+count<- interactome_string %>% dplyr::filter(interactome_string$preferredName_B %in% expansion$HGSymbol)
+overlap<-newGeneOverlap(expansion$HGSymbol, interactome_string$preferredName_B)
+go.obj<-testGeneOverlap(overlap)
+getContbl(go.obj)
+print(go.obj)
+

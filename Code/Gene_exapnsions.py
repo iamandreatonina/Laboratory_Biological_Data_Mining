@@ -142,6 +142,7 @@ nx.draw(sub_graph3,with_labels=True, node_color = color_map6)
 plt.show()
 
 
+
 graph_2=['nbpf14','gtf2i','fam156a']
 
 nodelist_graph2=[]
@@ -173,3 +174,18 @@ for gene in list(human_spec['Human_specific']):
     nodelist_HS.append(gene.lower())
     dataframe=pd.DataFrame(nodelist_HS)
     dataframe.to_csv('./Datasets_finals/Expansion_files/'+gene+'.csv', index=True)
+
+
+
+dataframe=pd.DataFrame(nodelist_graph1)
+dataframe.to_csv('./Datasets_finals/Graph1_5HS.csv', index=True)
+
+
+
+dataframe=pd.DataFrame(nodelist_graph2)
+dataframe.to_csv('./Datasets_finals/Graph2_3HS.csv', index=True)
+
+
+
+dataframe=pd.DataFrame(nodelist_graph3)
+dataframe.to_csv('./Datasets_finals/Graph3_3HS.csv', index=True)
