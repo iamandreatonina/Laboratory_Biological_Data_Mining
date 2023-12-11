@@ -12,7 +12,7 @@ Project developed by:
   * Sabri Kaci [sanka95](https://github.com/sabka95)
 
 <img src="https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Logo_group/photo_5929434998077767761_y.jpg" width = 300  alt ="group_logo" />
-##Topic 
+## Topic
 Study Human-specific genes in Acute Lymphoid Leukemia
 
 ## Abstract 
