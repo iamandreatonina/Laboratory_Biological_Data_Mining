@@ -1,0 +1,12 @@
+"Term","Combined.Score","Genes"
+"Doxorubicin-3 mg/kg in Saline-Rat-Spleen-1d-up",8.94019562388991,"SPON2;ANXA1;TCF7;FGL2;DSTN;HMGA2;ETS1;GJA1;CD8A;LCK;ACP5;PTPN7;LAT;MYO1G"
+"Doxorubicin-0.65 mg/kg in Saline-Rat-Spleen-3d-up",8.03047973552249,"SPON2;ANXA1;DSTN;HMGA2;ETS1;GJA1;SBK1;CD8A;LCK;CD5;ACP5;PTPN7;LAT;MYO1G"
+"Lead(IV) Acetate-600 mg/kg in Saline-Rat-Kidney-1d-dn",7.7537301202428,"DPP4;ENPEP;IGFBP5;DST;FXYD2;EPHX2;TCEA3;MGST1;HMGA2;SLC4A4;XYLB"
+"Mitomycin C-1.7 mg/kg in Saline-Rat-Bone marrow-5d-up",5.73084313746035,"CPA3;SPON2;ANXA1;VWF;KYNU;ALDH1A2;TCF7;FGL2;MGST1;ARHGEF3;PTPN7;LAT"
+"Minoxidil-83 mg/kg in CMC-Rat-Heart-5d-up",5.730636774295,"ANXA1;IGFBP5;DST;VWF;FGL2;DSTN;ATP1B1;FSTL1;ETS1;FBLN2;GJA1;FXYD2;SCN7A"
+
+
+Doxorubicin
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6734064/
+Mitomycin C
+https://pubmed.ncbi.nlm.nih.gov/6433039/
