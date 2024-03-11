@@ -6,6 +6,8 @@ library(readxl)
 library(ggplot2)
 library(stringr)
 
+`%nin%` <- Negate(`%in%`)
+
 setwd("../Datasets_finals")
 
 ##### Upload huamn specific genes 
@@ -22,7 +24,7 @@ Control <- read.csv('Controls.csv',sep = ',',header = T)
 # so we are going to eliminate the less informative one 
 
 duplicato <- Tumor$ensembl_gene_id[duplicated(Tumor$ensembl_gene_id)]
-# sum <- Tumor %>% dplyr::filter(Tumor$ensembl_gene_id == duplicato) 
+#sum <- Tumor %>% dplyr::filter(Tumor$ensembl_gene_id == duplicato) 
 # rowSums(sum[2:641]) # the first one is the most informative so we use distinct()
 Tumor <- distinct(Tumor,ensembl_gene_id,.keep_all =T )
 
@@ -549,7 +551,7 @@ component5$PC2 <- -component5$PC2
 fig9<-plot_ly(component5, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1$type, symbols = c('diamond','circle'), mode='markers',marker = list(size = 4))
 fig9
 
-write.csv(component5,file='ML_HS.csv',row.names = T)
+#write.csv(component5,file='ML_HS.csv',row.names = T)
 #### Non HS 
 clusterino_pam1_nonHS<-as.data.frame((pam1_nonHS$clustering))
 clusterino_pam1_nonHS$C_T <- "Tumor"
@@ -570,7 +572,7 @@ clusterino_pam1_nonHS$Cell_type[rownames(clusterino_pam1_nonHS) %in% metadata$`D
 component6 <- data.PC_nonHG$x
 component6<- cbind(component6,clusterino_pam1_nonHS)
 component6$PC2 <- -component6$PC2
-write.csv(component6,file='ML_nonHS.csv',row.names = T)
+#write.csv(component6,file='ML_nonHS.csv',row.names = T)
 
 ##### sistemare 
 fig9_nonHS<-plot_ly(component6, x=~PC1, y=~PC2,z=~PC3, color=clusterino_pam1_nonHS$Cell_type,colors=brewer.pal(n = 4, name = "RdBu"),  symbol = clusterino_pam1_nonHS$type, symbols = c('diamond','circle'), mode='markers',marker = list(size = 4))
@@ -830,11 +832,11 @@ Down_HS_T<- DEGs_subtype_T[DEGs_subtype_T$class=='-',] %>% dplyr::filter(rowname
 
 #### COMPARISON BETWEEN THE HS IN THE 3 SUBTYPES -> NOT sure of the code
 Common_T_PT <- Up_HS_T[rownames(Up_HS_T) %in% rownames(Up_HS_PreT),]
-# 2 in common!
+# 3 in common!
 Common_PT_PB <- Up_HS_PreT[rownames(Up_HS_PreT) %in% rownames(Up_HS_PreB),]
 # 0 in common
 Common_T_PB <- Up_HS_T[rownames(Up_HS_T) %in% rownames(Up_HS_PreB),]
-# 2 in common
+# 4 in common
 Common_T_PT_D <- Down_HS_T[rownames(Down_HS_T) %in% rownames(Down_HS_PreT),]
 # 0 in common
 Common_T_PB_D <- Down_HS_T[rownames(Down_HS_T) %in% rownames(Down_HS_PreB),]
