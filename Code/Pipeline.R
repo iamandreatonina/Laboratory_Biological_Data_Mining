@@ -6,7 +6,7 @@ library(readxl)
 library(ggplot2)
 library(stringr)
 
-setwd("~/Desktop/magistrale_Qcb/3master_QCB_first_semester_second_year/biological_data_mining_blanzieri/Laboratory_Biological_Data_Mining/Datasets_finals")
+setwd("../Datasets_finals")
 
 ##### Upload huamn specific genes 
 
@@ -15,7 +15,7 @@ Human_genes <- readxl::read_xlsx('Human-specific.xlsx')
 ##### Batch effect correction 
 
 #Load datasets 
-Tumor <- read.csv('Tumor_dataframe.csv',sep =',',header = T)
+Tumor <- read.csv('Tumor_dataframe.csv',sep =',',header = T) # needs to be unziped 
 Control <- read.csv('Controls.csv',sep = ',',header = T)
 
 # We found out a duplicated ensembl_gene_id due to the fact there isn't a 1 to 1 mapping from ensembl_gene_id and hugo_symbols
@@ -300,6 +300,7 @@ cpm_table_log <- as.data.frame(round(log10(cpm(edge_n_total)+1),2))
 jpeg(filename = '../images/Heatmap_plot_DEGs_logHS.jpeg')
 heatmap(as.matrix(cpm_table_log[which(rownames(cpm_table_log) %in% rownames(DEGs_selected)),]),ColSideColors = col, cexCol = 0.5,margins = c(4,4), col = pal, cexRow = 0.2)
 dev.off()
+
 
 
 ##### PCA analysis 
@@ -912,6 +913,8 @@ DEGs_age_HS <- DEGs_age %>% dplyr::filter(rownames(DEGs_age) %in% Human_genes$`E
 Up_HS_age <- DEGs_age[DEGs_age$class=='+',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='+',]) %in% Human_genes$`Ensembl ID`) 
 Down_HS_age<- DEGs_age[DEGs_age$class=='-',] %>% dplyr::filter(rownames(DEGs_age[DEGs_age$class=='-',]) %in% Human_genes$`Ensembl ID`) 
 
+
+
 convert <- getBM(attributes =c('ensembl_gene_id','entrezgene_id','external_gene_name'),filters = c('ensembl_gene_id'), values = row.names(Up_HS_age), mart = ensmebl)
 Up_HS_age$ensembl_gene_id<-row.names(Up_HS_age)
 
@@ -997,7 +1000,7 @@ down_age_wp <- enrichWP(gene =merged$entrezgene_id, organism = 'Homo sapiens', p
 
 head(down_age_wp, 10)
 
-
+############
 
 # VALIDATION OF ONEGENE - STRING
 # install.packages('rbioapi')
