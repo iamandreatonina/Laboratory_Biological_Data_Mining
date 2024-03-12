@@ -23,7 +23,7 @@ cv_lasso <- cv.glmnet(x = X,
 - The cv.glmnet function is used to perform cross-validated Lasso regression.
 - X is the predictor matrix, and Lasso_data$Cell_type is the response variable.
 - L1 regularization is controlled by the alpha parameter (set to 0.8 to do elastic-net).
-- Other optional parameters include parallel processing, [*relaxation*](https://glmnet.stanford.edu/articles/relax.html), type of measurement (mean squared error), and the number of folds for cross-validation.
+- Other optional parameters include parallel processing, [`relaxation`](https://glmnet.stanford.edu/articles/relax.html), type of measurement (mean squared error), and the number of folds for cross-validation.
 
 ![mse]()
 
