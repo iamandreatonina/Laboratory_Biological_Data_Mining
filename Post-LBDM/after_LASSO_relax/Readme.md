@@ -25,7 +25,7 @@ cv_lasso <- cv.glmnet(x = X,
 - L1 regularization is controlled by the alpha parameter (set to 0.8 to do elastic-net).
 - Other optional parameters include parallel processing, [`relaxation`](https://glmnet.stanford.edu/articles/relax.html), type of measurement (mean squared error), and the number of folds for cross-validation.
 
-![mse]()
+![mse](Post-LBDM/after_LASSO_relax/mse_cv_LASSO.png)
 
 2. Fitting Lasso Model with Optimal Lambda
 
