@@ -25,4 +25,10 @@ The term human-specific genes highlights a set of genes that characterize us as 
 * [Overleaf](https://it.overleaf.com/project/65295dce804a74efe5e6b6fc)
 
 ## Report 
-* Final Rep
+* [Project proposal Report](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Reports/Project_Proposal_Group_B1.pdf)
+* [Final Report](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Reports/Proposal_Report_LAST_EDIT.pdf)
+
+## Presentation 
+* [Project proposal Presentation](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Presentations/Project_Proposal_Presentation.pptx)
+* [Final Presentation](https://github.com/iamandreatonina/Laboratory_Biological_Data_Mining/blob/main/Presentations/Biological_Data_Minig_presentation.pdf)
+
